@@ -19,8 +19,7 @@ class Solution
 
             std::sort(pos.begin(), pos.end(), [&](const size_t &idx1, const size_t &idx2)
                     {
-                    return nums[idx1] < nums[idx2];
-
+                        return nums[idx1] < nums[idx2];
                     });
 
             auto bit = pos.cbegin();
@@ -38,7 +37,6 @@ class Solution
                     break;
 
                 }
-
             }
 
             std::sort(rst.begin(), rst.end());
