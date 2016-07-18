@@ -45,18 +45,18 @@ class Solution_1
 
 class Solution_2
 {
-	public:
-		std::vector<int> twoSum(std::vector<int>& nums, int target)
-		{
-			std::vector<int> rst;
+    public:
+        std::vector<int> twoSum(std::vector<int>& nums, int target)
+        {
+            std::vector<int> rst;
 
-			if (nums.size() < 2) return rst;
+            if (nums.size() < 2) return rst;
 
-			std::vector<int> pos;
-			for (size_t i = 0; i < nums.size(); ++i)
-			{
-				pos.push_back(i);
-			}
+            std::vector<int> pos;
+            for (size_t i = 0; i < nums.size(); ++i)
+            {
+                pos.push_back(i);
+            }
 
             auto comp1 = [&](const size_t &idx1, const size_t &idx2)
             {
@@ -68,51 +68,51 @@ class Solution_2
             {
                 return target < nums[idx];
             };
-			auto bit = pos.cbegin();
-			auto rit = std::upper_bound(pos.cbegin(), pos.cend(), target - nums[*bit], comp2);
+            auto bit = pos.cbegin();
+            auto rit = std::upper_bound(pos.cbegin(), pos.cend(), target - nums[*bit], comp2);
 
-			if (--rit <= bit) return rst;
+            if (--rit <= bit) return rst;
 
-			while (bit != rit)
-			{
-				auto sum = nums[*bit] + nums[*rit];
-				if (sum < target) ++bit;
-				else if (sum > target) --rit;
-				else
-				{
-					rst.push_back(*bit);
-					rst.push_back(*rit);
-					break;
-				}
-			}
+            while (bit != rit)
+            {
+                auto sum = nums[*bit] + nums[*rit];
+                if (sum < target) ++bit;
+                else if (sum > target) --rit;
+                else
+                {
+                    rst.push_back(*bit);
+                    rst.push_back(*rit);
+                    break;
+                }
+            }
 
-			std::sort(rst.begin(), rst.end());
-			return rst;
-		}
+            std::sort(rst.begin(), rst.end());
+            return rst;
+        }
 };
 
 template<class T>
 void dumpVect(const std::vector<T> &vec)
 {
-	for (auto i : vec)
-	{
-		printf("%d ", i);
-	}
-	printf("\n");
+    for (auto i : vec)
+    {
+        printf("%d ", i);
+    }
+    printf("\n");
 }
 
 int main()
 {
-	std::vector<int> nums {3,2,4};
-	int target = 6;
+    std::vector<int> nums {3,2,4};
+    int target = 6;
 
-	Solution_1 slu1;
-	Solution_2 slu2;
+    Solution_1 slu1;
+    Solution_2 slu2;
 
-	auto rst = slu1.twoSum(nums, target);
+    auto rst = slu1.twoSum(nums, target);
     dumpVect(rst);
 
-	rst = slu2.twoSum(nums, target);
+    rst = slu2.twoSum(nums, target);
     dumpVect(rst);
 }
 
