@@ -58,16 +58,16 @@ class Solution_2
 				pos.push_back(i);
 			}
 
-			auto comp1 = [&](const size_t &idx1, const size_t &idx2)
-			{
-				return nums[idx1] < nums[idx2];
-			};
-			std::sort(pos.begin(), pos.end(), comp1);
+            auto comp1 = [&](const size_t &idx1, const size_t &idx2)
+            {
+                return nums[idx1] < nums[idx2];
+            };
+            std::sort(pos.begin(), pos.end(), comp1);
 
             auto comp2 = [&](int target, const size_t &idx)
-			{
-				return target < nums[idx];
-			};
+            {
+                return target < nums[idx];
+            };
 			auto bit = pos.cbegin();
 			auto rit = std::upper_bound(pos.cbegin(), pos.cend(), target - nums[*bit], comp2);
 
