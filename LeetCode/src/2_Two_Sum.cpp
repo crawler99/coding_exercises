@@ -14,7 +14,6 @@ class Solution
             for (size_t i = 0; i < nums.size(); ++i)
             {
                 pos.push_back(i);
-
             }
 
             std::sort(pos.begin(), pos.end(), [&](const size_t &idx1, const size_t &idx2)
