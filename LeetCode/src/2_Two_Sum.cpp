@@ -34,7 +34,6 @@ class Solution
                     rst.push_back(*bit);
                     rst.push_back(*rit);
                     break;
-
                 }
             }
 
