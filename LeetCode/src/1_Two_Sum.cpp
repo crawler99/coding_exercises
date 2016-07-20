@@ -1,6 +1,7 @@
 #include <vector>
 #include <algorithm>
 #include <cstdio>
+#include <unordered_map>
 
 class Solution_1
 {
@@ -91,6 +92,41 @@ class Solution_2
         }
 };
 
+class Solution_3
+{
+    public:
+        std::vector<int> twoSum(std::vector<int>& nums, int target)
+        {
+            std::vector<int> rst;
+
+            if (nums.size() > 1)
+            {
+                std::unordered_map<int, size_t> hashMap;
+
+                for (size_t i = 0; i < nums.size(); ++i)
+                {
+                    hashMap[nums[i]] = i;
+                }
+
+                for (size_t i = 0; i < nums.size(); ++i)
+                {
+                    auto it = hashMap.find(target - nums[i]);
+                    if (it != hashMap.end())
+                    {
+                        if (it->second != i)
+                        {
+                            rst.push_back(i);
+                            rst.push_back(it->second);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return rst;
+        }
+};
+
 template<class T>
 void dumpVect(const std::vector<T> &vec)
 {
@@ -108,11 +144,15 @@ int main()
 
     Solution_1 slu1;
     Solution_2 slu2;
+    Solution_3 slu3;
 
     auto rst = slu1.twoSum(nums, target);
     dumpVect(rst);
 
     rst = slu2.twoSum(nums, target);
+    dumpVect(rst);
+
+    rst = slu3.twoSum(nums, target);
     dumpVect(rst);
 }
 
