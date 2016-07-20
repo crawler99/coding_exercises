@@ -143,12 +143,9 @@ class Solution_4
                     auto it = hashMap.find(target - nums[i]);
                     if (it != hashMap.end())
                     {
-                        if (it->second != i)
-                        {
-                            rst.push_back(it->second);
-                            rst.push_back(i);
-                            break;
-                        }
+                        rst.push_back(it->second);
+                        rst.push_back(i);
+                        break;
                     }
                     hashMap[nums[i]] = i;
                 }
