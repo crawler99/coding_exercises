@@ -127,6 +127,37 @@ class Solution_3
         }
 };
 
+class Solution_4
+{
+    public:
+        std::vector<int> twoSum(std::vector<int>& nums, int target)
+        {
+            std::vector<int> rst;
+
+            if (nums.size() > 1)
+            {
+                std::unordered_map<int, size_t> hashMap;
+
+                for (size_t i = 0; i < nums.size(); ++i)
+                {
+                    auto it = hashMap.find(target - nums[i]);
+                    if (it != hashMap.end())
+                    {
+                        if (it->second != i)
+                        {
+                            rst.push_back(it->second);
+                            rst.push_back(i);
+                            break;
+                        }
+                    }
+                    hashMap[nums[i]] = i;
+                }
+            }
+
+            return rst;
+        }
+};
+
 template<class T>
 void dumpVect(const std::vector<T> &vec)
 {
@@ -145,6 +176,7 @@ int main()
     Solution_1 slu1;
     Solution_2 slu2;
     Solution_3 slu3;
+    Solution_4 slu4;
 
     auto rst = slu1.twoSum(nums, target);
     dumpVect(rst);
@@ -153,6 +185,9 @@ int main()
     dumpVect(rst);
 
     rst = slu3.twoSum(nums, target);
+    dumpVect(rst);
+
+    rst = slu4.twoSum(nums, target);
     dumpVect(rst);
 }
 
