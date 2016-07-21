@@ -7,6 +7,9 @@ struct ListNode
     ListNode(int x) : val(x), next(NULL) {}
 };
 
+/**********************
+ * Best timing
+ * *******************/
 class Solution_1
 {
     public:
@@ -15,7 +18,7 @@ class Solution_1
             ListNode *rst = nullptr;
             ListNode *k = rst;
             ListNode *p = rst;
-            unsigned int carry {0};
+            unsigned int carry { 0 };
 
             while (l1 || l2 || carry)
             {
@@ -46,9 +49,9 @@ class Solution_2
     public:
         ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
         {
-            ListNode *rst = nullptr;
+            ListNode *rst = new ListNode(0);
             ListNode *cur = rst;
-            unsigned int carry {0};
+            unsigned int carry { 0 };
 
             while (l1 || l2 || carry)
             {
