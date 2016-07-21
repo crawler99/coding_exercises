@@ -30,8 +30,8 @@ class Solution_1
                     p = k;
                 }
 
-                if (l1) { k->val += l1->val; l1 = l1->next;  }
-                if (l2) { k->val += l2->val; l2 = l2->next;  }
+                if (l1) { k->val += l1->val; l1 = l1->next; }
+                if (l2) { k->val += l2->val; l2 = l2->next; }
 
                 carry = (k->val > 9 ? 1 : 0);
                 k->val -= 10 * carry;
