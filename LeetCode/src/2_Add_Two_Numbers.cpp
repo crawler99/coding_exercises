@@ -19,7 +19,7 @@ class Solution_1
 
             while (l1 || l2 || carry)
             {
-                k = new ListNode(0);
+                k = new ListNode(carry);
                 if (!rst)
                 {
                     rst = p = k;
@@ -32,7 +32,6 @@ class Solution_1
 
                 if (l1) { k->val += l1->val; l1 = l1->next; }
                 if (l2) { k->val += l2->val; l2 = l2->next; }
-                k->val += carry;
 
                 carry = (k->val > 9 ? 1 : 0);
                 k->val -= 10 * carry;
