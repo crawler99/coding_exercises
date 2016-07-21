@@ -30,14 +30,39 @@ class Solution_1
                     p = k;
                 }
 
-                if (l1) { k->val += l1->val; l1 = l1->next; }
-                if (l2) { k->val += l2->val; l2 = l2->next; }
+                if (l1) { k->val += l1->val; l1 = l1->next;  }
+                if (l2) { k->val += l2->val; l2 = l2->next;  }
 
                 carry = (k->val > 9 ? 1 : 0);
                 k->val -= 10 * carry;
             }
 
             return rst;
+        }
+};
+
+class Solution_2
+{
+    public:
+        ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
+        {
+            ListNode *rst = nullptr;
+            ListNode *cur = rst;
+            unsigned int carry {0};
+
+            while (l1 || l2 || carry)
+            {
+                cur->next = new ListNode(carry);
+                cur = cur->next;
+
+                if (l1) { cur->val += l1->val; l1 = l1->next; }
+                if (l2) { cur->val += l2->val; l2 = l2->next; }
+
+                carry = (cur->val > 9 ? 1 : 0);
+                cur->val -= 10 * carry;
+            }
+
+            return rst->next;
         }
 };
 
@@ -67,6 +92,9 @@ int main()
 
     Solution_1 slu1;
     dumpList(slu1.addTwoNumbers(l1, l2));
+
+    Solution_2 slu2;
+    dumpList(slu2.addTwoNumbers(l1, l2));
 
     return 0;
 }
