@@ -62,7 +62,7 @@ class Solution_2
                 if (l2) { cur->val += l2->val; l2 = l2->next; }
 
                 carry = (cur->val > 9 ? 1 : 0);
-                cur->val -= 10 * carry;
+                cur->val -= (10 * carry);
             }
 
             return rst->next;
