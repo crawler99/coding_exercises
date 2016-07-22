@@ -13,7 +13,7 @@ struct ListNode
 class Solution_1
 {
     public:
-        ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
+        ListNode* addTwoNumbers(ListNode *l1, ListNode *l2)
         {
             ListNode *rst = nullptr;
             ListNode *k = rst;
@@ -47,7 +47,7 @@ class Solution_1
 class Solution_2
 {
     public:
-        ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
+        ListNode* addTwoNumbers(ListNode *l1, ListNode *l2)
         {
             ListNode *rst = new ListNode(0);
             ListNode *cur = rst;
