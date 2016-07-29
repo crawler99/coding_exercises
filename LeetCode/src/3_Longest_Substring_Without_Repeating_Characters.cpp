@@ -29,8 +29,7 @@ class Solution_1
                     do
                     {
                         pMap[s[idx1]] = -1;
-                    }
-                    while (++idx1 <= pMap[s[idx2]]);
+                    } while (++idx1 <= pMap[s[idx2]]);
                     pMap[s[idx2]] = idx2;
                 }
                 else
