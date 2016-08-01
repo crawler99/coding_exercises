@@ -7,10 +7,7 @@ struct ListNode
     ListNode(int x) : val(x), next(NULL) {}
 };
 
-/**********************
- * Best timing
- * *******************/
-class Solution_1
+class Solution_1 /* Best timing */
 {
     public:
         ListNode* addTwoNumbers(ListNode *l1, ListNode *l2)

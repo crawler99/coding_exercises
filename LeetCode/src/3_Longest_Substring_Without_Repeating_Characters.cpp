@@ -40,12 +40,37 @@ class Solution_1
         }
 };
 
+class Solution_2 /* Recommended */
+{
+    public:
+        int lengthOfLongestSubstring(std::string s)
+        {
+            bool exist[256];
+            memset(exist, 0, sizeof(exist));
+            int i = 0, maxLen = 0;
+            for (int j = 0; j < s.length(); ++j)
+            {
+                while (exist[s[j]])
+                {
+                    exist[s[i]] = false;
+                    ++i;
+                }
+                exist[s[j]] = true;
+                maxLen = std::max(j - i + 1, maxLen);
+            }
+            return maxLen;
+        }
+};
+
 int main()
 {
-    std::string testStr("abcabcbb");
+    std::string testStr("c");
 
     Solution_1 slu1;
     printf("Result: %d\n", slu1.lengthOfLongestSubstring(testStr));
+
+    Solution_2 slu2;
+    printf("Result: %d\n", slu2.lengthOfLongestSubstring(testStr));
 
     return 0;
 }
