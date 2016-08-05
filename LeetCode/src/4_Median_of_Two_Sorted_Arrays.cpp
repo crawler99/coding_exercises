@@ -5,50 +5,53 @@
 #include <vector>
 #include <queue>
 
-class Solution_1
+class Solution_1 /* Meet the complexity requirement but slow */
 {
     public:
         double findMedianSortedArrays(std::vector<int> &nums1, std::vector<int> &nums2)
         {
-            size_t nums { nums1.size() + nums2.size() }, medianHIdx { nums / 2 + 1 };
+            size_t nums { nums1.size() + nums2.size() };
             if (nums == 0) return 0.0;
             bool isEven { nums % 2 == 0 };
 
             auto *p1 = &nums1, *p2 = &nums2; // p1 always for target, and p2 always for base
             auto baseIt = p2->begin(), targetIt = p1->begin();
-            size_t ctr { 0 };
-            int exceed  = ctr - medianHIdx;
+            size_t medianHIdx { nums / 2 + 1 }, ctr { 0 };
+            int gap = medianHIdx - ctr;
 
-            while ((baseIt != p2->end()) && (targetIt != p1->end()))
+            while (gap > 0)
             {
-                auto oldTargetIt = targetIt;
-
-                printf("Trying to find a number no less than %d ...\n", *baseIt);
-
-                targetIt = std::lower_bound(oldTargetIt, p1->end(), *baseIt);
-                ctr += (targetIt - oldTargetIt) + 1; // count in only *baseIt
-
-                printf("Ctr becomes %d while medianHIdx is %d\n", ctr, medianHIdx);
-
-                exceed = ctr - medianHIdx;
-                if (exceed >= 0) break;
+                if (baseIt == p2->end())
+                {
+                    targetIt += (gap - 1);
+                    return (isEven ? (*targetIt + *(targetIt - 1)) / 2.0 : *targetIt);
+                }
+                else if (targetIt == p1->end())
+                {
+                    baseIt += (gap - 1);
+                    return (isEven ? (*baseIt + (gap > 1 ? *(baseIt - 1) : *(targetIt - 1))) / 2.0 : *baseIt);
+                }
+                else
+                {
+                    auto oldTargetIt = targetIt;
+                    targetIt = std::upper_bound(oldTargetIt, p1->end(), *baseIt);
+                    ctr += (targetIt - oldTargetIt) + 1; // count in *baseIt
+                }
+                gap = medianHIdx - ctr;
+                if (gap <= 0) break;
 
                 std::swap(p1, p2);
                 std::swap(++baseIt, targetIt);
             }
 
-            if (baseIt == p2->end()) { while (exceed < 0) { ++targetIt; ++exceed; } }
-            if (targetIt == p1->end()) { while (exceed < 0) { ++baseIt; ++exceed; } }
-
-            printf("Ctr exceeds higher median idx, step back taregetIt by %d steps ...\n", exceed + 1);
-            targetIt -= (exceed + 1);
-            if (exceed == 0)
+            targetIt -= (- gap + 1);
+            if (gap == 0)
             {
                 return (isEven ? (*targetIt + *baseIt) / 2.0 : *baseIt);
             }
             else
             {
-                return (isEven ? (*targetIt + *(targetIt + 1)) / 2.0 : *targetIt);
+                return (isEven ? (*targetIt + *(targetIt + 1)) / 2.0 : *(targetIt + 1));
             }
         }
 };
@@ -93,11 +96,27 @@ int main()
     std::vector<int> nums7 {1, 2};
     std::vector<int> nums8 {3, 5, 10, 20, 40};
 
+    std::vector<int> nums9 {1};
+    std::vector<int> nums10 {1};
+
+    std::vector<int> nums11 {1, 2};
+    std::vector<int> nums12 {1, 2, 3};
+
+    std::vector<int> nums13 {100001};
+    std::vector<int> nums14 {100000};
+
+    std::vector<int> nums15 {1};
+    std::vector<int> nums16 {2, 3, 4};
+
     Solution_1 slu;
-    printf("Median: %f\n", slu.findMedianSortedArrays(nums1, nums2));
-    printf("Median: %f\n", slu.findMedianSortedArrays(nums3, nums4));
-    printf("Median: %f\n", slu.findMedianSortedArrays(nums5, nums6));
-    printf("Median: %f\n", slu.findMedianSortedArrays(nums7, nums8));
+    printf("Median1: %f\n", slu.findMedianSortedArrays(nums1, nums2));
+    printf("Median2: %f\n", slu.findMedianSortedArrays(nums3, nums4));
+    printf("Median3: %f\n", slu.findMedianSortedArrays(nums5, nums6));
+    printf("Median4: %f\n", slu.findMedianSortedArrays(nums7, nums8));
+    printf("Median5: %f\n", slu.findMedianSortedArrays(nums9, nums10));
+    printf("Median6: %f\n", slu.findMedianSortedArrays(nums11, nums12));
+    printf("Median7: %f\n", slu.findMedianSortedArrays(nums13, nums14));
+    printf("Median8: %f\n", slu.findMedianSortedArrays(nums15, nums16));
 
     return 0;
 }
