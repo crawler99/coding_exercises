@@ -56,30 +56,42 @@ class Solution_1 /* Meet the complexity requirement but slow */
         }
 };
 
-class Solution_2 /* Slow and can't meet the complexity requirement */
+class Solution_2 /* Call "find k'th element" twice */
 {
     public:
         double findMedianSortedArrays(std::vector<int> &nums1, std::vector<int> &nums2)
         {
-            size_t nums { nums1.size() + nums2.size() }, medianHIdx { nums / 2 + 1 }, ctr { 0 };
-            if (nums == 0) return 0.0;
-            bool isEven { nums % 2 == 0 };
-
-            std::priority_queue<int> pq;
-            auto it1 = nums1.cbegin(), it2 = nums2.cbegin(), ite1 = nums1.cend(), ite2 = nums2.cend();
-            for (; ctr < medianHIdx; ++ctr)
-            {
-                if (it1 == ite1) pq.emplace(*(it2++));
-                else if (it2 == ite2) pq.emplace(*(it1++));
-                else if (*it1 < *it2) pq.emplace(*(it1++));
-                else pq.emplace(*(it2++));
-            }
-
-            auto top = pq.top();
-            if (!isEven) return top;
-            pq.pop();
-            return (top + pq.top()) / 2.0;
+			auto m = nums1.size(), n = nums2.size();
+			if ((m + n)&1)
+				return findKthSortedArrays(nums1.begin(), m, nums2.begin(), n, (n + m) / 2 + 1);
+			else
+				return (findKthSortedArrays(nums1.begin(), m, nums2.begin(), n, (n + m) / 2 + 1) +
+						findKthSortedArrays(nums1.begin(), m, nums2.begin(), n, (n + m) / 2)) / 2.0;
         }
+
+    private:
+		double findKthSortedArrays(std::vector<int>::iterator it1, int m,
+                                   std::vector<int>::iterator it2, int n,
+                                   int k)
+		{
+			if (m < n)
+			{
+				std::swap(n, m);
+				std::swap(it1, it2);
+			}
+			if (n == 0)
+				return *(it1 + k - 1);
+			if (k == 1)
+				return std::min(*it1, *it2);
+
+			int pb = std::min(k / 2, n), pa = k - pb;
+			if (*(it1 + pa - 1) > *(it2 + pb - 1))
+				return findKthSortedArrays(it1, m, it2 + pb, n - pb, k - pb);
+			else if (*(it1 + pa - 1) < *(it2 + pb - 1))
+				return findKthSortedArrays(it1 + pa, m - pa, it2, n, k - pa);
+			else
+				return *(it1 + pa - 1);
+		}
 };
 
 int main()
@@ -108,7 +120,7 @@ int main()
     std::vector<int> nums15 {1};
     std::vector<int> nums16 {2, 3, 4};
 
-    Solution_1 slu;
+    Solution_2 slu;
     printf("Median1: %f\n", slu.findMedianSortedArrays(nums1, nums2));
     printf("Median2: %f\n", slu.findMedianSortedArrays(nums3, nums4));
     printf("Median3: %f\n", slu.findMedianSortedArrays(nums5, nums6));
