@@ -74,21 +74,18 @@ class Solution_2 /* Call "find k'th element" twice, meet the complexity requirem
                                    std::vector<int>::iterator it2, int n,
                                    int k)
 		{
-			if (m < n)
-			{
-				std::swap(n, m);
-				std::swap(it1, it2);
-			}
-			if (n == 0)
-				return *(it1 + k - 1);
+            if (m > n)
+                return findKthSortedArrays(it2, n, it1, m, k);
+			if (m == 0)
+				return *(it2 + k - 1);
 			if (k == 1)
 				return std::min(*it1, *it2);
 
-			int pb = std::min(k / 2, n), pa = k - pb;
-			if (*(it1 + pa - 1) > *(it2 + pb - 1))
-				return findKthSortedArrays(it1, m, it2 + pb, n - pb, k - pb);
-			else if (*(it1 + pa - 1) < *(it2 + pb - 1))
+			int pa = std::min(k / 2, m), pb = k - pa;
+			if (*(it1 + pa - 1) < *(it2 + pb - 1))
 				return findKthSortedArrays(it1 + pa, m - pa, it2, n, k - pa);
+			else if (*(it1 + pa - 1) > *(it2 + pb - 1))
+				return findKthSortedArrays(it1, m, it2 + pb, n - pb, k - pb);
 			else
 				return *(it1 + pa - 1);
 		}
