@@ -61,34 +61,34 @@ class Solution_2 /* Call "find k'th element" twice, meet the complexity requirem
     public:
         double findMedianSortedArrays(std::vector<int> &nums1, std::vector<int> &nums2)
         {
-			auto m = nums1.size(), n = nums2.size();
-			if ((m + n)&1)
-				return findKthSortedArrays(nums1.begin(), m, nums2.begin(), n, (n + m) / 2 + 1);
-			else
-				return (findKthSortedArrays(nums1.begin(), m, nums2.begin(), n, (n + m) / 2 + 1) +
-						findKthSortedArrays(nums1.begin(), m, nums2.begin(), n, (n + m) / 2)) / 2.0;
+            auto m = nums1.size(), n = nums2.size();
+            if ((m + n)&1)
+                return findKthSortedArrays(nums1.begin(), m, nums2.begin(), n, (n + m) / 2 + 1);
+            else
+                return (findKthSortedArrays(nums1.begin(), m, nums2.begin(), n, (n + m) / 2 + 1) +
+                        findKthSortedArrays(nums1.begin(), m, nums2.begin(), n, (n + m) / 2)) / 2.0;
         }
 
     private:
-		double findKthSortedArrays(std::vector<int>::iterator it1, int m,
+        double findKthSortedArrays(std::vector<int>::iterator it1, int m,
                                    std::vector<int>::iterator it2, int n,
                                    int k)
-		{
+        {
             if (m > n)
                 return findKthSortedArrays(it2, n, it1, m, k);
-			if (m == 0)
-				return *(it2 + k - 1);
-			if (k == 1)
-				return std::min(*it1, *it2);
+            if (m == 0)
+                return *(it2 + k - 1);
+            if (k == 1)
+                return std::min(*it1, *it2);
 
-			int pa = std::min(k / 2, m), pb = k - pa;
-			if (*(it1 + pa - 1) < *(it2 + pb - 1))
-				return findKthSortedArrays(it1 + pa, m - pa, it2, n, k - pa);
-			else if (*(it1 + pa - 1) > *(it2 + pb - 1))
-				return findKthSortedArrays(it1, m, it2 + pb, n - pb, k - pb);
-			else
-				return *(it1 + pa - 1);
-		}
+            int pa = std::min(k / 2, m), pb = k - pa;
+            if (*(it1 + pa - 1) < *(it2 + pb - 1))
+                return findKthSortedArrays(it1 + pa, m - pa, it2, n, k - pa);
+            else if (*(it1 + pa - 1) > *(it2 + pb - 1))
+                return findKthSortedArrays(it1, m, it2 + pb, n - pb, k - pb);
+            else
+                return *(it1 + pa - 1);
+        }
 };
 
 int main()
