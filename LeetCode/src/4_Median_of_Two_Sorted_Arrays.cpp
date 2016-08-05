@@ -5,7 +5,7 @@
 #include <vector>
 #include <queue>
 
-class Solution_1 /* Meet the complexity requirement but slow */
+class Solution_1 /* Not fully meet the complexity requirement, slow */
 {
     public:
         double findMedianSortedArrays(std::vector<int> &nums1, std::vector<int> &nums2)
@@ -56,7 +56,7 @@ class Solution_1 /* Meet the complexity requirement but slow */
         }
 };
 
-class Solution_2 /* Call "find k'th element" twice */
+class Solution_2 /* Call "find k'th element" twice, meet the complexity requirement */
 {
     public:
         double findMedianSortedArrays(std::vector<int> &nums1, std::vector<int> &nums2)
