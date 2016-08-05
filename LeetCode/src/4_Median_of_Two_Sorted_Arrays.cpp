@@ -3,6 +3,7 @@
 #include <string>
 #include <cstring>
 #include <vector>
+#include <queue>
 
 class Solution_1
 {
@@ -52,6 +53,32 @@ class Solution_1
         }
 };
 
+class Solution_2 /* Slow and can't meet the complexity requirement */
+{
+    public:
+        double findMedianSortedArrays(std::vector<int> &nums1, std::vector<int> &nums2)
+        {
+            size_t nums { nums1.size() + nums2.size() }, medianHIdx { nums / 2 + 1 }, ctr { 0 };
+            if (nums == 0) return 0.0;
+            bool isEven { nums % 2 == 0 };
+
+            std::priority_queue<int> pq;
+            auto it1 = nums1.cbegin(), it2 = nums2.cbegin(), ite1 = nums1.cend(), ite2 = nums2.cend();
+            for (; ctr < medianHIdx; ++ctr)
+            {
+                if (it1 == ite1) pq.emplace(*(it2++));
+                else if (it2 == ite2) pq.emplace(*(it1++));
+                else if (*it1 < *it2) pq.emplace(*(it1++));
+                else pq.emplace(*(it2++));
+            }
+
+            auto top = pq.top();
+            if (!isEven) return top;
+            pq.pop();
+            return (top + pq.top()) / 2.0;
+        }
+};
+
 int main()
 {
     std::vector<int> nums1 {1, 2};
@@ -66,11 +93,11 @@ int main()
     std::vector<int> nums7 {1, 2};
     std::vector<int> nums8 {3, 5, 10, 20, 40};
 
-    Solution_1 slu1;
-    printf("Median: %f\n", slu1.findMedianSortedArrays(nums1, nums2));
-    printf("Median: %f\n", slu1.findMedianSortedArrays(nums3, nums4));
-    printf("Median: %f\n", slu1.findMedianSortedArrays(nums5, nums6));
-    printf("Median: %f\n", slu1.findMedianSortedArrays(nums7, nums8));
+    Solution_1 slu;
+    printf("Median: %f\n", slu.findMedianSortedArrays(nums1, nums2));
+    printf("Median: %f\n", slu.findMedianSortedArrays(nums3, nums4));
+    printf("Median: %f\n", slu.findMedianSortedArrays(nums5, nums6));
+    printf("Median: %f\n", slu.findMedianSortedArrays(nums7, nums8));
 
     return 0;
 }
