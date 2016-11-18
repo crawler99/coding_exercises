@@ -3,12 +3,12 @@
 #include <iostream>
 
 // --------------------------------------------------------------------
-// This is a class to represent an inner (computational) node in a DAG 
+// This is a class to represent an inner (computational) node in a DAG
 // whose value is the sum of all the upstream values
 // --------------------------------------------------------------------
 class Add : public InnerNode
 {
-    using InnerNode::InnerNode;  // inherit constructors 
+    using InnerNode::InnerNode;  // inherit constructors
 
 public:
     bool evaluate() override FORCE_INLINE
@@ -24,12 +24,12 @@ public:
 };
 
 // --------------------------------------------------------------------
-// This is a class to represent an inner (computational) node in a DAG 
+// This is a class to represent an inner (computational) node in a DAG
 // whose value is the product of all the upstream values
 // --------------------------------------------------------------------
 class Multiply : public InnerNode
 {
-    using InnerNode::InnerNode;  // inherit constructors 
+    using InnerNode::InnerNode;  // inherit constructors
 
 public:
     bool evaluate() override FORCE_INLINE
@@ -58,11 +58,13 @@ public:
     ~Duration()
     {
         clock_gettime(CLOCK_REALTIME, &_end);
-        std::cout << "\nDuration: " << (_end.tv_sec - _start.tv_sec) << "s "
-                                    << (_end.tv_nsec - _start.tv_nsec) << "ns\n";
+        std::cout << "\nDuration: "
+                  << NANOSECS_PER_SEC * (_end.tv_sec - _start.tv_sec) + (_end.tv_nsec - _start.tv_nsec) << "ns\n";
     }
 
 private:
+    constexpr static int NANOSECS_PER_SEC { 1000 * 1000 * 1000 };
+
     timespec _start;
     timespec _end;
 };
