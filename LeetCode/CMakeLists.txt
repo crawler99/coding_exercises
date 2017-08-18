@@ -27,11 +27,11 @@ add_compile_options(-std=c++14)
 set(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE} -pthread")
 set(CMAKE_CXX_CREATE_SHARED_LIBRARY "${CMAKE_CXX_CREATE_SHARED_LIBRARY} -pthread")
 
+#
+project(LeetCode)
+
 # Add test dirs
 add_subdirectory(1_Two_Sum)
 add_subdirectory(2_Add_Two_Numbers)
 add_subdirectory(3_Longest_Substring_Without_Repeating_Characters)
 add_subdirectory(4_Median_of_Two_Sorted_Arrays)
-
-#
-project(LeetCode)
