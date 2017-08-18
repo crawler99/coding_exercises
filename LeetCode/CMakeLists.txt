@@ -23,10 +23,11 @@ set(CMAKE_CXX_FLAGS "-g -Wall")
 
 add_compile_options(-std=c++14)
 
+# NOTE: these linker variables should be after 'project'
 set(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE} -pthread")
 set(CMAKE_CXX_CREATE_SHARED_LIBRARY "${CMAKE_CXX_CREATE_SHARED_LIBRARY} -pthread")
 
-# Enable testing (this has to be before add_subdirectory)
+# Enable testing (this should be before 'add_subdirectory')
 if (${BUILD_TESTS})
   enable_testing()
 endif()
