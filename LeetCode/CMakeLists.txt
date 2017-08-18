@@ -5,6 +5,9 @@ cmake_minimum_required(VERSION 2.8)
 set(CMAKE_C_COMPILER "${GCC_ROOT}/bin/gcc" CACHE PATH "Path to C compiler")
 set(CMAKE_CXX_COMPILER "${GCC_ROOT}/bin/g++" CACHE PATH "Path to C++ compiler")
 
+# Start project
+project(LeetCode)
+
 # Adding a variable 'test' to let CMake know if we need to build test programs.
 # Turn it on with 'cmake -Dvarname=ON'
 option(test "Build tests." ON)
@@ -26,9 +29,6 @@ add_compile_options(-std=c++14)
 
 set(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE} -pthread")
 set(CMAKE_CXX_CREATE_SHARED_LIBRARY "${CMAKE_CXX_CREATE_SHARED_LIBRARY} -pthread")
-
-#
-project(LeetCode)
 
 # Add test dirs
 add_subdirectory(1_Two_Sum)
