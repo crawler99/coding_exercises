@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(1_Two_Sum)
+project(2_Add_Two_Numbers)
 
 include_directories(${PROJECT_SOURCE_DIR})
 

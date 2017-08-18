@@ -29,6 +29,7 @@ set(CMAKE_CXX_CREATE_SHARED_LIBRARY "${CMAKE_CXX_CREATE_SHARED_LIBRARY} -pthread
 
 # Add test dirs
 add_subdirectory(1_Two_Sum)
+add_subdirectory(2_Add_Two_Numbers)
 
 #
 project(LeetCode)
