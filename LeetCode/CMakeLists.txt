@@ -8,10 +8,6 @@ set(CMAKE_CXX_COMPILER "${GCC_ROOT}/bin/g++" CACHE PATH "Path to C++ compiler")
 # Start project
 project(LeetCode)
 
-# Adding a variable 'test' to let CMake know if we need to build test programs.
-# Turn it on with 'cmake -Dvarname=ON'
-option(test "Build tests." ON)
-
 # Compilation env settings
 function(Add_LD_LIBRARY_PATH PATH)
     string(FIND ENV{LD_LIBRARY_PATH} "${PATH}" _PATH_IDX)
@@ -35,3 +31,8 @@ add_subdirectory(1_Two_Sum)
 add_subdirectory(2_Add_Two_Numbers)
 add_subdirectory(3_Longest_Substring_Without_Repeating_Characters)
 add_subdirectory(4_Median_of_Two_Sorted_Arrays)
+
+# Enable testing
+if (${BUILD_TESTS})
+  enable_testing()
+endif()

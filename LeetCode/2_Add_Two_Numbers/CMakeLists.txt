@@ -4,8 +4,8 @@ project(2_Add_Two_Numbers)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
-if (test)
-  enable_testing()
+if (${BUILD_TESTS})
+  message("Building tests for " ${PROJECT_NAME} " ...")
 
   include_directories(${GTEST_ROOT}/include)
   include_directories(${GMOCK_ROOT}/include)

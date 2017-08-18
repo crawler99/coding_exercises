@@ -4,8 +4,8 @@ project(4_Median_of_Two_Sorted_Arrays)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
-if (test)
-  enable_testing()
+if (${BUILD_TESTS})
+  message("Building tests for " ${PROJECT_NAME} " ...")
 
   include_directories(${GTEST_ROOT}/include)
   include_directories(${GMOCK_ROOT}/include)
