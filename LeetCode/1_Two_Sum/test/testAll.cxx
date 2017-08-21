@@ -12,18 +12,19 @@ TEST(Correctness, SimpleInput)
     Solution_3 slu3;
     Solution_4 slu4;
 
+    std::vector<int> answer {1,2};
+
     auto rst = slu1.twoSum(nums, target);
-    dumpVect(rst);
+    EXPECT_THAT(answer, ::testing::ContainerEq(rst));
 
     rst = slu2.twoSum(nums, target);
-    dumpVect(rst);
+    EXPECT_THAT(answer, ::testing::ContainerEq(rst));
 
     rst = slu3.twoSum(nums, target);
-    dumpVect(rst);
+    EXPECT_THAT(answer, ::testing::ContainerEq(rst));
 
     rst = slu4.twoSum(nums, target);
-    dumpVect(rst);
-
+    EXPECT_THAT(answer, ::testing::ContainerEq(rst));
 
 /*
   EXPECT_CALL(application, _ApplicationName())
