@@ -6,7 +6,7 @@ struct ListNode
 {
     int val;
     ListNode *next;
-    ListNode(int x) : val(x), next(NULL) {}
+    ListNode(int x) : val(x), next(nullptr) {}
 };
 
 class Solution_1 /* Best timing */
@@ -69,16 +69,4 @@ class Solution_2
             return rst->next;
         }
 };
-
-//------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------
-void dumpList(const ListNode *list)
-{
-    while (list)
-    {
-        printf("[%d]->", list->val);
-        list = list->next;
-    }
-    printf("\n");
-}
 
