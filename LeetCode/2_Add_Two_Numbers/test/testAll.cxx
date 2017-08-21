@@ -17,8 +17,7 @@ ListNode* createList(std::initializer_list<unsigned int> numbers)
         }
         if (!head)
         {
-            head = p;
-            node = p;
+            head = node = p;
         }
     }
 
