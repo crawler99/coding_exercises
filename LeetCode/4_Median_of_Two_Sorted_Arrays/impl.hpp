@@ -10,7 +10,7 @@
 class Solution_1 /* Not fully meet the complexity requirement, slow */
 {
     public:
-        double findMedianSortedArrays(std::vector<int> &nums1, std::vector<int> &nums2)
+        double findMedianSortedArrays(const std::vector<int> &nums1, const std::vector<int> &nums2)
         {
             size_t nums { nums1.size() + nums2.size() };
             if (nums == 0) return 0.0;
@@ -63,7 +63,7 @@ class Solution_1 /* Not fully meet the complexity requirement, slow */
 class Solution_2 /* Call "find k'th element" twice, meet the complexity requirement */
 {
     public:
-        double findMedianSortedArrays(std::vector<int> &nums1, std::vector<int> &nums2)
+        double findMedianSortedArrays(const std::vector<int> &nums1, const std::vector<int> &nums2)
         {
             auto m = nums1.size(), n = nums2.size();
             if ((m + n)&1)
@@ -74,8 +74,8 @@ class Solution_2 /* Call "find k'th element" twice, meet the complexity requirem
         }
 
     private:
-        double findKthSortedArrays(std::vector<int>::iterator it1, int m,
-                                   std::vector<int>::iterator it2, int n,
+        double findKthSortedArrays(std::vector<int>::const_iterator it1, int m,
+                                   std::vector<int>::const_iterator it2, int n,
                                    int k)
         {
             if (m > n)
