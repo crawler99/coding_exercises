@@ -7,9 +7,9 @@ TEST(Correctness, SimpleInput)
     std::string testStr("c");
 
     Solution_1 slu1;
-    printf("Result: %d\n", slu1.lengthOfLongestSubstring(testStr));
+    EXPECT_EQ(1, slu1.lengthOfLongestSubstring(testStr));
 
     Solution_2 slu2;
-    printf("Result: %d\n", slu2.lengthOfLongestSubstring(testStr));
+    EXPECT_EQ(1, slu2.lengthOfLongestSubstring(testStr));
 }
 
