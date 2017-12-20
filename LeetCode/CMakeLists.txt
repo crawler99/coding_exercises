@@ -33,10 +33,20 @@ if (${BUILD_TESTS})
 endif()
 
 # Add test dirs
-add_subdirectory(1_Two_Sum)
-add_subdirectory(2_Add_Two_Numbers)
-add_subdirectory(3_Longest_Substring_Without_Repeating_Characters)
-add_subdirectory(4_Median_of_Two_Sorted_Arrays)
-add_subdirectory(6_ZigZag_Conversion)
-add_subdirectory(7_Reverse_Integer)
-add_subdirectory(9_Palindrome_Number)
+function(SUBDIRLIST result curdir)
+  file(GLOB children RELATIVE ${curdir} ${curdir}/*)
+  set(dirlist "")
+  foreach(child ${children})
+    if(IS_DIRECTORY ${curdir}/${child})
+      list(APPEND dirlist ${child})
+    endif()
+  endforeach()
+  set(${result} ${dirlist} PARENT_SCOPE)
+endfunction()
+
+SUBDIRLIST(SUBDIRS "${CMAKE_SOURCE_DIR}/problems")
+
+foreach(subdir ${SUBDIRS})
+  add_subdirectory("problems/${subdir}")
+endforeach()
+
