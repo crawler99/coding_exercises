@@ -6,7 +6,7 @@ set(CMAKE_C_COMPILER "${GCC_ROOT}/bin/gcc" CACHE PATH "Path to C compiler")
 set(CMAKE_CXX_COMPILER "${GCC_ROOT}/bin/g++" CACHE PATH "Path to C++ compiler")
 
 # Start project
-project(LeetCode)
+project(Samples)
 
 # Compilation env settings
 function(Add_LD_LIBRARY_PATH PATH)
