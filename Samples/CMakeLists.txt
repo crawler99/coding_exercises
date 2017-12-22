@@ -19,9 +19,9 @@ endfunction()
 Add_LD_LIBRARY_PATH("${GCC_ROOT}/lib")
 Add_LD_LIBRARY_PATH("${GCC_ROOT}/lib64")
 
-set(CMAKE_CXX_FLAGS "-g -Wall")
+set(CMAKE_CXX_FLAGS "-g -Wall -std=c++14")
 
-add_compile_options(-std=c++14)
+add_compile_options(-DDEBUG)
 
 # NOTE: these linker variables should be after 'project'
 set(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE} -pthread")
