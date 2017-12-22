@@ -44,7 +44,7 @@ public:
         memcpy(_pBits, val._pBits, _blockNum * _blockBytes);
     }
 
-    // Copy assignment operator with copy-and-swap idiom
+    // Copy assignment operator with copy-and-swap idiom (don't need to define move assignment operator as this one takes over)
     friend void swap(Bitset<SIZE> &first, Bitset<SIZE> &second)
     {
         using std::swap;
