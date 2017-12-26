@@ -13,7 +13,7 @@
 // --------------------------------------------------------
 // This is a class to hold a bit set data structure.
 // --------------------------------------------------------
-template <size_t SIZE>
+template <size_t SIZE> 
 class Bitset
 {
 public:
