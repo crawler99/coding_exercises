@@ -3,7 +3,7 @@
 #ifdef __GNUC__
 #define FORCE_INLINE __attribute__((always_inline))
 #else
-#define FORCE_INLINE 
+#define FORCE_INLINE
 #endif
 
 #include <limits>
@@ -21,7 +21,7 @@ public:
     using SizeType = decltype(SIZE);
 
     // Ctor
-    Bitset() : _bitNum(SIZE) 
+    Bitset() : _bitNum(SIZE)
     {
 #ifdef DEBUG
         std::cout << "\nIn constructor";
@@ -44,15 +44,17 @@ public:
         memcpy(_pBits, val._pBits, _blockNum * _blockBytes);
     }
 
-    // Copy assignment operator with copy-and-swap idiom (don't need to define move assignment operator as this one takes over)
+    // Copy assignment operator with copy-and-swap idiom
     friend void swap(Bitset<SIZE> &first, Bitset<SIZE> &second)
     {
         using std::swap;
-	swap(first._pBits, second._pBits);
-	swap(first._bitNum, second._bitNum);
-	swap(first._blockNum, second._blockNum);
+        swap(first._pBits, second._pBits);
+        swap(first._bitNum, second._bitNum);
+        swap(first._blockNum, second._blockNum);
     }
 
+    // (Don't need to define move assignment operator since this one takes over. Otherwise you'll get a compile error
+    // complaining about ambiguous overload of operator '=' when assigning a rValue to a lValue.)
     Bitset& operator = (Bitset<SIZE> another)
     {
 #ifdef DEBUG
