@@ -9,6 +9,10 @@ public:
 	int maxArea {0};
 	for (int i = 0; static_cast<size_t>(i) < height.size() - 1; ++i)
 	{
+	    if (i > 0 && height[i] <= height[i-1]) 
+            {
+                continue;
+            }
             int highestRightEdge {0};
 	    for (int j = height.size() - 1; j > i; --j)
             {
