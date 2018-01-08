@@ -1,7 +1,7 @@
 #include <vector>
 #include <algorithm>
 
-class Solution
+class Solution1  /* Original soluition, beat ony 19% */
 {
 public:
     int maxArea(std::vector<int>& height)
@@ -32,3 +32,24 @@ public:
     }
 };
 
+class Solution2  /* Posted solution on LeetCode, better than Solution1 but still beat only 23% */
+{
+public:
+     int maxArea(std::vector<int>& height) 
+     {
+        int maxArea = 0, l = 0, r = height.size() - 1;
+        while (l < r) 
+        {
+            maxArea = std::max(maxArea, std::min(height[l], height[r]) * (r - l));
+            if (height[l] < height[r])
+            {
+                ++l;
+            }
+            else
+            {
+                --r;
+            }
+        }
+        return maxArea;
+    }
+};
