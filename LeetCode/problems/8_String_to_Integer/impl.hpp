@@ -1,7 +1,7 @@
 #include <string>
 #include <climits>
 
-class Solution 
+class Solution1
 {
 public:
     int myAtoi(std::string str)
@@ -43,6 +43,15 @@ public:
 		}
 	}	
 	return static_cast<int>(num);
+    }
+};
+
+class Solution2
+{
+public:
+    int myAtoi(std::string str)
+    {
+	return 0;
     }
 };
 

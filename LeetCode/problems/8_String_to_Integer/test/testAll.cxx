@@ -2,7 +2,8 @@
 #include "gmock/gmock.h"
 #include "impl.hpp"
 
-TEST(Correctness, SimpleInput)
+template <typename Solution>
+void TestCorrectness()
 {
     Solution s;
 
@@ -25,5 +26,15 @@ TEST(Correctness, SimpleInput)
     EXPECT_EQ(-2147483648, s.myAtoi("-2147483648"));
     EXPECT_EQ(2147483647, s.myAtoi("2147483648"));
     EXPECT_EQ(2147483647, s.myAtoi("    10522545459"));
+}
+
+TEST(Correctness, Solution1)
+{
+    TestCorrectness<Solution1>();
+}
+
+TEST(Correctness, Solution2)
+{
+    TestCorrectness<Solution2>();
 }
 
