@@ -54,7 +54,7 @@ public:
         int maxDiv10 { INT_MAX / 10 };
         size_t i = 0, n = str.size();
         while((i < n) && str[i] == ' ' ) ++i;
-        int size = 1;
+        int sign = 1;
         if (i < n && str[i] == '+')
         {
             ++i;
@@ -66,10 +66,10 @@ public:
         }
 
         int num = 0;
-        while (i < n && str[i] >= '0' && str[i] <= '9')
+        while (i < n && (str[i] >= '0' && str[i] <= '9'))
         {
             int digit = str[i] - '0';
-            if (num > maxDiv10 || num == maxDiv10 && digit >= 8)
+            if (num > maxDiv10 || (num == maxDiv10 && digit >= 8))
             {
                 return sign == 1 ? INT_MAX : INT_MIN;
             }
