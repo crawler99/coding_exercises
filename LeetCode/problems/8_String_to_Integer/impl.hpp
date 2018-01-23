@@ -1,7 +1,7 @@
 #include <string>
 #include <climits>
 
-class Solution1
+class Solution1  /* beat ony 20% */
 {
 public:
     int myAtoi(std::string str)
@@ -46,37 +46,41 @@ public:
     }
 };
 
-class Solution2
+class Solution2 /* beat 55% */
 {
 public:
     int myAtoi(std::string str)
     {
         int maxDiv10 { INT_MAX / 10 };
+        int num = 0, sign = 1;
+
         size_t i = 0, n = str.size();
         while((i < n) && str[i] == ' ' ) ++i;
-        int sign = 1;
-        if (i < n && str[i] == '+')
-        {
-            ++i;
-        }
-        else if (i < n && str[i] == '-')
-        {
-            sign = -1;
-            ++i;
-        }
 
-        int num = 0;
-        while (i < n && (str[i] >= '0' && str[i] <= '9'))
+        if (i < n)
         {
-            int digit = str[i] - '0';
-            if (num > maxDiv10 || (num == maxDiv10 && digit >= 8))
+            switch (str[i])
             {
-                return sign == 1 ? INT_MAX : INT_MIN;
+                case '-':
+                    sign = -1;
+                case '+':
+                    ++i;
+                    break;
+                defaule:
+                    ;
             }
-            num = num * 10 + digit;
-            ++i;
-        }
 
+            while (i < n && (str[i] >= '0' && str[i] <= '9'))
+            {
+                int digit = str[i] - '0';
+                if (num > maxDiv10 || (num == maxDiv10 && digit >= 8))
+                {
+                    return sign == 1 ? INT_MAX : INT_MIN;
+                }
+                num = num * 10 + digit;
+                ++i;
+            }
+        }
         return sign * num;
     }
 };
