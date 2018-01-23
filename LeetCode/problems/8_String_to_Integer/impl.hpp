@@ -66,7 +66,7 @@ public:
                 case '+':
                     ++i;
                     break;
-                defaule:
+                default:
                     ;
             }
 
