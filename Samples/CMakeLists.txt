@@ -19,7 +19,7 @@ endfunction()
 Add_LD_LIBRARY_PATH("${GCC_ROOT}/lib")
 Add_LD_LIBRARY_PATH("${GCC_ROOT}/lib64")
 
-set(CMAKE_CXX_FLAGS "-g -Wall -std=c++14")
+set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11")
 
 add_compile_options(-DDEBUG)
 

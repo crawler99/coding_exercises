@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "Bitset.hxx"
+#include "Calculator.hxx"
 #include <string>
 #include <iostream>
 
@@ -80,4 +81,11 @@ TEST(Bitset, Correctness)
     {
         std::cout << "\n-> Exception caught: " << e.what() << "\n\n";
     }
+}
+
+TEST(Calculator, Correctness)
+{
+    Calculator calc;
+    EXPECT_EQ(10, calc.Calculate("1+2+3+4"));
+    EXPECT_EQ(120, calc.Calculate("5!"));
 }
