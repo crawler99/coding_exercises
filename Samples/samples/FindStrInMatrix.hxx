@@ -35,7 +35,6 @@ public:
                     {
                         ++rst;
                         pos += target1.length() - 1;
-                        std::cout << "find optiver: pos = " << pos << std::endl;
                         continue;
                     }
                 }
@@ -45,7 +44,6 @@ public:
                     {
                         ++rst;
                         pos += target2.length() - 1;
-                        std::cout << "find reverse: pos = " << pos << std::endl;
                         continue;
                     }
                 }
