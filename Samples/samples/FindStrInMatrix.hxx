@@ -26,23 +26,30 @@ public:
 
         auto find_row = [&](const std::string &row)
         {
+            if (row.empty()) return;
             for (int pos = 0; pos < row.length();)
             {
-                auto found1 = row.find(target1, pos);
-                if (found1 != std::string::npos)
+                if (row[pos] == 'O')
                 {
-                    ++rst;
-                    pos = found1 + target1.length() - 1;
-                    continue;
+                    if (row.substr(pos, target1.length()) == target1)
+                    {
+                        ++rst;
+                        pos += target1.length() - 1;
+                        std::cout << "find optiver: pos = " << pos << std::endl;
+                        continue;
+                    }
                 }
-                auto found2 = row.find(target2, pos);
-                if (found2 != std::string::npos)
+                else if (row[pos] == 'R')
                 {
-                    ++rst;
-                    pos = found2 + target2.length() - 1;
-                    continue;
+                    if (row.substr(pos, target2.length()) == target2)
+                    {
+                        ++rst;
+                        pos += target2.length() - 1;
+                        std::cout << "find reverse: pos = " << pos << std::endl;
+                        continue;
+                    }
                 }
-                break;
+                ++pos;
             }
         };
 
