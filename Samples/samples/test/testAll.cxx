@@ -2,6 +2,8 @@
 #include "gmock/gmock.h"
 #include "Bitset.hxx"
 #include "Calculator.hxx"
+#include "MaxAvgRunningSpeed.hxx"
+#include "FindStrInMatrix.hxx"
 #include <string>
 #include <iostream>
 
@@ -89,3 +91,30 @@ TEST(Calculator, Correctness)
     EXPECT_EQ(10, calc.Calculate("1+2+3+4"));
     EXPECT_EQ(120, calc.Calculate("5!"));
 }
+
+TEST(FindStrInMatrix, Correctness)
+{
+    FindStrInMatrix finder;
+    std::vector<std::string> input
+    {
+        "AKDEOPTIVEREVITPOVER",
+        "RKDEPPTIVERDXPOTIVER",
+        "EKDETPTIVERDXTPTIVER",
+        "VKDEIPTREVITPOTTIVER",
+        "IKDEVPTIVEREVITPOVER",
+        "TKDEEPTIVERDXOVTIVER",
+        "PKDERPTIVERDXOETIVER",
+        "OKDEOPTIVERDXORTIVER",
+    };
+    EXPECT_EQ(7, finder.find(input));
+}
+
+TEST(MaxAvgRunningSpeed, Correctness)
+{
+    MaxAvgRunningSpeed calc;
+    std::vector<int> input1 { 2000, 5000, 300 };
+    EXPECT_EQ(0.0, calc.calculateFastestKilometreSpeed(input1));
+    std::vector<int> input2 { 1, 23, 12, 5, 800, 45, 2000, 5000, 300 };
+    EXPECT_EQ(0.0, calc.calculateFastestKilometreSpeed(input2));
+}
+
