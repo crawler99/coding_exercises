@@ -21,8 +21,6 @@ Add_LD_LIBRARY_PATH("${GCC_ROOT}/lib64")
 
 set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
 
-add_compile_options(-DDEBUG)
-
 # NOTE: these linker variables should be after 'project'
 set(CMAKE_CXX_LINK_EXECUTABLE "${CMAKE_CXX_LINK_EXECUTABLE} -pthread")
 set(CMAKE_CXX_CREATE_SHARED_LIBRARY "${CMAKE_CXX_CREATE_SHARED_LIBRARY} -pthread")
@@ -32,5 +30,6 @@ if (${BUILD_TESTS})
   enable_testing()
 endif()
 
-# Add test dirs
+# Add sub-dirs
 add_subdirectory("shapes")
+add_subdirectory("paper_scissors_rock")

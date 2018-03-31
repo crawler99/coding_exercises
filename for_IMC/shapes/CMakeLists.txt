@@ -25,6 +25,6 @@ if (${BUILD_TESTS})
   # target_link_libraries(${EXECUTABLE} ${PROJECT_NAME})
 
   # Add tests
-  add_test(NAME TestAll COMMAND ${EXECUTABLE})
+  add_test(NAME TestShapes COMMAND ${EXECUTABLE})
 endif()
 

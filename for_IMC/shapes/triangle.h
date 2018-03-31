@@ -12,9 +12,10 @@ class Triangle : public Shape
     public:
         Triangle(double edge1, double edge2, double edge3)
         {
-            if ((edge1 > (edge2 + edge3)) ||
-                (edge2 > (edge1 + edge3)) ||
-                (edge3 > (edge1 + edge2)))
+            bool invalid = (edge1 > (edge2 + edge3)) ||
+                           (edge2 > (edge1 + edge3)) ||
+                           (edge3 > (edge1 + edge2));
+            if (invalid)
             {
                 throw std::invalid_argument("Invalid edges provided to construct a triangle.");
             }
