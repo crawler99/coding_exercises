@@ -30,7 +30,7 @@ class ScreenPlayer : public Player
                     }
                 case Judgement::Draw:
                     {
-                        std::cout << "We had a draw in this round.";
+                        std::cout << "You got a draw in this round.";
                         break;
                     }
                 default:

@@ -30,3 +30,5 @@ if (${BUILD_TESTS})
   # Add tests
   add_test(NAME TestPaperScissorsRock COMMAND ${EXECUTABLE})
 endif()
+
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
