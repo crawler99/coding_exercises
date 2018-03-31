@@ -9,8 +9,8 @@ if (${BUILD_TESTS})
 
   include_directories(${GTEST_ROOT}/include)
   include_directories(${GMOCK_ROOT}/include)
-  link_directories(${GTEST_ROOT}/lib)
-  link_directories(${GMOCK_ROOT}/lib)
+  link_directories(${GTEST_ROOT}/lib64)
+  link_directories(${GMOCK_ROOT}/lib64)
 
   file(GLOB TEST_SRCS "test/*.cc")
 
