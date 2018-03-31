@@ -1,5 +1,5 @@
-#ifndef FOR_IMC_SHAPES_TRIANGLE_HXX_
-#define FOR_IMC_SHAPES_TRIANGLE_HXX_
+#ifndef _FOR_IMC_SHAPES_TRIANGLE_H_
+#define _FOR_IMC_SHAPES_TRIANGLE_H_
 
 #include "shape.h"
 #include <cmath>
