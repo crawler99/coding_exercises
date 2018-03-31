@@ -7,10 +7,10 @@
 
 namespace psr {
 
-class RandomPlayer : public Player<Choice>
+class RandomPlayer : public PSRPlayer
 {
     public:
-        RandomPlayer(const std::string &name) : Player<Choice>(name)
+        RandomPlayer(const std::string &name) : PSRPlayer(name)
         {
             srand(time(nullptr));
         }

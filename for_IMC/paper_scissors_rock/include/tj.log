@@ -1,0 +1,110 @@
+diff --git a/for_IMC/paper_scissors_rock/include/paper_player.h b/for_IMC/paper_scissors_rock/include/paper_player.h
+index 763ddc8..0395b49 100644
+--- a/for_IMC/paper_scissors_rock/include/paper_player.h
++++ b/for_IMC/paper_scissors_rock/include/paper_player.h
+@@ -5,10 +5,10 @@
+ 
+ namespace psr {
+ 
+-class PaperPlayer : public Player<Choice>
++class PaperPlayer : public PSRPlayer
+ {
+     public:
+-        PaperPlayer(const std::string &name) : Player<Choice>(name)
++        PaperPlayer(const std::string &name) : PSRPlayer(name)
+         {
+         }
+ 
+diff --git a/for_IMC/paper_scissors_rock/include/player.h b/for_IMC/paper_scissors_rock/include/player.h
+index 42b2498..27f5dd6 100644
+--- a/for_IMC/paper_scissors_rock/include/player.h
++++ b/for_IMC/paper_scissors_rock/include/player.h
+@@ -4,8 +4,6 @@
+ #include "rule.h"
+ #include <map>
+ 
+-namespace psr {
+-
+ template <typename ChoiceT>
+ class Player
+ {
+@@ -46,6 +44,10 @@ class Player
+         std::map<Judgement, uint32_t> _results;
+ };
+ 
++namespace psr {
++
++using PSRPlayer = Player<Choice>;
++
+ }
+ 
+ #endif
+diff --git a/for_IMC/paper_scissors_rock/include/random_player.h b/for_IMC/paper_scissors_rock/include/random_player.h
+index 8293bd5..5094159 100644
+--- a/for_IMC/paper_scissors_rock/include/random_player.h
++++ b/for_IMC/paper_scissors_rock/include/random_player.h
+@@ -7,10 +7,10 @@
+ 
+ namespace psr {
+ 
+-class RandomPlayer : public Player<Choice>
++class RandomPlayer : public PSRPlayer
+ {
+     public:
+-        RandomPlayer(const std::string &name) : Player<Choice>(name)
++        RandomPlayer(const std::string &name) : PSRPlayer(name)
+         {
+             srand(time(nullptr));
+         }
+diff --git a/for_IMC/paper_scissors_rock/include/rock_player.h b/for_IMC/paper_scissors_rock/include/rock_player.h
+index 9e0742d..3ba1cb6 100644
+--- a/for_IMC/paper_scissors_rock/include/rock_player.h
++++ b/for_IMC/paper_scissors_rock/include/rock_player.h
+@@ -5,10 +5,10 @@
+ 
+ namespace psr {
+ 
+-class RockPlayer : public Player<Choice>
++class RockPlayer : public PSRPlayer
+ {
+     public:
+-        RockPlayer(const std::string &name) : Player<Choice>(name)
++        RockPlayer(const std::string &name) : PSRPlayer(name)
+         {
+         }
+ 
+diff --git a/for_IMC/paper_scissors_rock/include/scissors_player.h b/for_IMC/paper_scissors_rock/include/scissors_player.h
+index af09f68..7e21fc1 100644
+--- a/for_IMC/paper_scissors_rock/include/scissors_player.h
++++ b/for_IMC/paper_scissors_rock/include/scissors_player.h
+@@ -5,10 +5,10 @@
+ 
+ namespace psr {
+ 
+-class ScissorsPlayer : public Player<Choice>
++class ScissorsPlayer : public PSRPlayer
+ {
+     public:
+-        ScissorsPlayer(const std::string &name) : Player<Choice>(name)
++        ScissorsPlayer(const std::string &name) : PSRPlayer(name)
+         {
+         }
+ 
+diff --git a/for_IMC/paper_scissors_rock/include/smart_player.h b/for_IMC/paper_scissors_rock/include/smart_player.h
+index 9ce9da7..c3e930e 100644
+--- a/for_IMC/paper_scissors_rock/include/smart_player.h
++++ b/for_IMC/paper_scissors_rock/include/smart_player.h
+@@ -9,11 +9,11 @@
+ 
+ namespace psr {
+ 
+-class SmartPlayer : public Player<Choice>
++class SmartPlayer : public PSRPlayer
+ {
+     public:
+         SmartPlayer(const std::string &name, uint32_t observe_window)
+-            : Player<Choice>(name), _observe_window(observe_window)
++            : PSRPlayer(name), _observe_window(observe_window)
+         {
+             srand(time(nullptr));
+         }

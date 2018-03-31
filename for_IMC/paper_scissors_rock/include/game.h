@@ -8,13 +8,11 @@
 #include <memory>
 #include <iostream>
 
-namespace psr {
-
 template <typename ChoiceT>
 class Game
 {
     public:
-        Game(const ::Rule<ChoiceT> &rule, uint32_t rounds = -1) : _rule(rule), _rounds(rounds)
+        Game(const Rule<ChoiceT> &rule, uint32_t rounds = -1) : _rule(rule), _rounds(rounds)
         {
         }
 
@@ -91,9 +89,11 @@ class Game
 
     private:
         std::set<Player<ChoiceT>*> _players;
-        const ::Rule<ChoiceT> &_rule;
+        const Rule<ChoiceT> &_rule;
         int32_t _rounds { -1 }; // -1 means infinite rounds
 };
+
+namespace psr {
 
 using PSRGame = Game<Choice>;
 

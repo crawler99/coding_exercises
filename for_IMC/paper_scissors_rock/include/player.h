@@ -4,8 +4,6 @@
 #include "rule.h"
 #include <map>
 
-namespace psr {
-
 template <typename ChoiceT>
 class Player
 {
@@ -45,6 +43,10 @@ class Player
         std::string _name;
         std::map<Judgement, uint32_t> _results;
 };
+
+namespace psr {
+
+using PSRPlayer = Player<Choice>;
 
 }
 

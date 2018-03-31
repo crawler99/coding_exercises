@@ -9,11 +9,11 @@
 
 namespace psr {
 
-class SmartPlayer : public Player<Choice>
+class SmartPlayer : public PSRPlayer
 {
     public:
         SmartPlayer(const std::string &name, uint32_t observe_window)
-            : Player<Choice>(name), _observe_window(observe_window)
+            : PSRPlayer(name), _observe_window(observe_window)
         {
             srand(time(nullptr));
         }
