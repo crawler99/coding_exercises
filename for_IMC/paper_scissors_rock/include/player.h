@@ -3,6 +3,7 @@
 
 #include "rule.h"
 #include <map>
+#include <iostream>
 
 template <typename ChoiceT>
 class Player
@@ -21,6 +22,7 @@ class Player
 
         void OnJudgement(ChoiceT my_choice, Judgement judgement, std::map<ChoiceT, uint32_t> &observation)
         {
+            std::cout << _name << " => " << static_cast<int>(my_choice) << std::endl;
             ++_results[judgement];
             UpdateStrategy(my_choice, judgement, observation);
         }

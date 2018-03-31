@@ -7,6 +7,7 @@
 #include <set>
 #include <memory>
 #include <iostream>
+#include <sstream>
 
 template <typename ChoiceT>
 class Game
@@ -35,7 +36,11 @@ class Game
 
             while (_rounds == -1 || cur_round <= _rounds)
             {
-                std::cout << "~~ Round " << cur_round << " ~~"<< std::endl;
+                std::ostringstream oss;
+                oss << "~~ Round " << cur_round << " ~~"<< std::endl;
+                std::string temp_str = oss.str();
+                std::string bar(temp_str.size(), '-');
+                std::cout << bar << std::endl << temp_str << bar << std::endl;
 
                 if (_players.empty())
                 {
@@ -58,8 +63,6 @@ class Game
 
                     ++choice_stats[c];
                     choice_map[c].insert(p);
-
-                    std::cout << p->GetName() << ": " << static_cast<int>(c) << std::endl;
                 }
 
                 if (stop) break;

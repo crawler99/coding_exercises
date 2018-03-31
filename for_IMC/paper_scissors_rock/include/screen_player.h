@@ -20,38 +20,63 @@ class ScreenPlayer : public Player
             {
                 case Judgement::Win:
                     {
-                        std::cout << "Congratulations! You got a win." << std::endl;
+                        std::cout << "Congratulations! You got a win.";
                         break;
                     }
                 case Judgement::Lose:
                     {
-                        std::cout << "Unfortunately, you lost this round." << std::endl;
+                        std::cout << "Unfortunately, you lost this round.";
                         break;
                     }
                 case Judgement::Draw:
                     {
-                        std::cout << "We had a draw in this round." << std::endl;
+                        std::cout << "We had a draw in this round.";
                         break;
                     }
                 default:
                     ;
             }
-            std::cout << "Total win[" << GetResultNum(Judgement::Win) << "], loss[" << GetResultNum(Judgement::Lose)
-                      << "], draw[" << GetResultNum(Judgement::Draw) << "]" << std::endl;
+            std::cout << " (total win[" << GetResultNum(Judgement::Win) << "], loss[" << GetResultNum(Judgement::Lose)
+                      << "], draw[" << GetResultNum(Judgement::Draw) << "])" << std::endl;
         }
 
         Choice GetChoice() override
         {
-            switch (rand() % 3)
+            PrintChoices();
+            char c;
+            std::cin >> c;
+            switch (c)
             {
-                case 0:
-                    return Choice::Paper;
-                case 1:
-                    return Choice::Scissors;
+                case 'P': return Choice::Paper;
+                case 'S': return Choice::Scissors;
+                case 'R': return Choice::Rock;
+                case 'E':
+                    {
+                        _exit = true;
+                        return Choice::Rock; // Return whatever. It doesn't matter as the game will stop.
+                    }
                 default:
-                    return Choice::Rock;
+                    return GetChoice(); // Recursive call, should be acceptable for a screen player.
             }
         }
+
+        bool DecideToQuit() override
+        {
+            return _exit;
+        }
+
+    private:
+        void PrintChoices()
+        {
+            std::cout << "Make your choice:" << std::endl
+                      << "[P]aper" << std::endl
+                      << "[S]cissors" << std::endl
+                      << "[R]ock" << std::endl
+                      << "[E]xit" << std::endl
+                      << "<= ";
+        }
+
+        bool _exit { false };
 };
 
 }
