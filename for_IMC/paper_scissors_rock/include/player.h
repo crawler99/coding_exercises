@@ -46,7 +46,7 @@ class Player
 
 namespace psr {
 
-using PSRPlayer = Player<Choice>;
+using Player = ::Player<Choice>;
 
 }
 

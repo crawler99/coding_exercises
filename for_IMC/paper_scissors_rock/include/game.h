@@ -26,36 +26,45 @@ class Game
             _players.clear();
         }
 
-        void Play()
+        void Play(const std::string &name = "")
         {
+            srand(time(nullptr));
             uint32_t cur_round = 1;
-            bool stop = false;
 
-            while (!stop && (_rounds < 0 || cur_round <= _rounds))
+            std::cout << "** Start Game (" << name << ") **"<< std::endl;
+
+            while (_rounds == -1 || cur_round <= _rounds)
             {
-                std::cout << "==== Round ====" << cur_round << std::endl;
+                std::cout << "~~ Round " << cur_round << " ~~"<< std::endl;
 
                 if (_players.empty())
                 {
                     continue;
                 }
 
+                // Collect input choices from each player
                 std::map<ChoiceT, uint32_t> choice_stats;
                 std::map<ChoiceT, std::set<Player<ChoiceT>*>> choice_map;
                 bool stop = false;
-
                 for (auto &p : _players)
                 {
                     ChoiceT c = p->GetChoice();
-                    std::cout << p->GetName() << " shows " << static_cast<int>(c) << std::endl;
-                    ++choice_stats[c];
-                    choice_map[c].insert(p);
+
                     if (p->DecideToQuit())
                     {
                         stop = true;
+                        break;
                     }
+
+                    ++choice_stats[c];
+                    choice_map[c].insert(p);
+
+                    std::cout << p->GetName() << ": " << static_cast<int>(c) << std::endl;
                 }
 
+                if (stop) break;
+
+                // Make judgement
                 if (choice_map.size() == 2) // Only when there're totally two different choices that we can have winners and losers.
                 {
                     auto cit = choice_map.cbegin();
@@ -95,7 +104,7 @@ class Game
 
 namespace psr {
 
-using PSRGame = Game<Choice>;
+using Game = ::Game<Choice>;
 
 }
 

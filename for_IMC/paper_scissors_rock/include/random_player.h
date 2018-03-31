@@ -7,12 +7,11 @@
 
 namespace psr {
 
-class RandomPlayer : public PSRPlayer
+class RandomPlayer : public Player
 {
     public:
-        RandomPlayer(const std::string &name) : PSRPlayer(name)
+        RandomPlayer(const std::string &name) : Player(name)
         {
-            srand(time(nullptr));
         }
 
         Choice GetChoice() override

@@ -5,10 +5,10 @@
 
 namespace psr {
 
-class PaperPlayer : public PSRPlayer
+class PaperPlayer : public Player
 {
     public:
-        PaperPlayer(const std::string &name) : PSRPlayer(name)
+        PaperPlayer(const std::string &name) : Player(name)
         {
         }
 

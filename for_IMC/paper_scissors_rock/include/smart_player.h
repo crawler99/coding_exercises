@@ -9,13 +9,12 @@
 
 namespace psr {
 
-class SmartPlayer : public PSRPlayer
+class SmartPlayer : public Player
 {
     public:
         SmartPlayer(const std::string &name, uint32_t observe_window)
-            : PSRPlayer(name), _observe_window(observe_window)
+            : Player(name), _observe_window(observe_window)
         {
-            srand(time(nullptr));
         }
 
         void UpdateStrategy(Choice my_choice, Judgement judgement, std::map<Choice, uint32_t> &observation) override

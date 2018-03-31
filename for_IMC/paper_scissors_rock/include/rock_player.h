@@ -5,10 +5,10 @@
 
 namespace psr {
 
-class RockPlayer : public PSRPlayer
+class RockPlayer : public Player
 {
     public:
-        RockPlayer(const std::string &name) : PSRPlayer(name)
+        RockPlayer(const std::string &name) : Player(name)
         {
         }
 
