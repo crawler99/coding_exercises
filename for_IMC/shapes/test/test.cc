@@ -26,6 +26,16 @@ TEST(AreaVisitor, Correctness)
 
     AreaVisitor visitor;
     store.AcceptVisit(visitor);
-    EXPECT_NEAR(169.307513475, visitor.GetTotalArea(), 0.00001);
+
+    // Check correctness.
+    double epsilon { 0.00001 };
+    EXPECT_EQ(4, visitor.GetShapeNum());
+    std::vector<double> my_areas = visitor.GetIndividualAreas();
+    std::vector<double> right_areas { 28.2743343, 95.033179175, 40, 6 };
+    for (unsigned int i = 0; i < right_areas.size(); ++i)
+    {
+        EXPECT_NEAR(right_areas.at(i), my_areas.at(i), epsilon);
+    }
+    EXPECT_NEAR(169.307513475, visitor.GetTotalArea(), epsilon);
 }
 
