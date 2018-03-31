@@ -42,6 +42,11 @@ class Player
             UpdateStrategy(judge_rst, observation);
         }
 
+        uint32_t GetRstNum(JudgeRst judge_rst)
+        {
+            return _results[judge_rst];
+        }
+
         virtual void UpdateStrategy(JudgeRst judge_rst, std::map<T, uint32_t> &observation)
         {
         }
@@ -83,6 +88,45 @@ class PSRRule : public Rule<Choice>
         }
 };
 
+class PSRPaperPlayer : public Player<Choice>
+{
+    public:
+        PSRPaperPlayer(const std::string &name) : Player<Choice>(name)
+        {
+        }
+
+        Choice GetChoice() override
+        {
+            return Choice::Paper;
+        }
+};
+
+class PSRScissorsPlayer : public Player<Choice>
+{
+    public:
+        PSRScissorsPlayer(const std::string &name) : Player<Choice>(name)
+        {
+        }
+
+        Choice GetChoice() override
+        {
+            return Choice::Scissors;
+        }
+};
+
+class PSRRockPlayer : public Player<Choice>
+{
+    public:
+        PSRRockPlayer(const std::string &name) : Player<Choice>(name)
+        {
+        }
+
+        Choice GetChoice() override
+        {
+            return Choice::Rock;
+        }
+};
+
 class PSRRandomPlayer : public Player<Choice>
 {
     public:
@@ -96,13 +140,10 @@ class PSRRandomPlayer : public Player<Choice>
             switch (rand() % 3)
             {
                 case 0:
-                    std::cout << "Player " << GetName() << " send P"<< std::endl;
                     return Choice::Paper;
                 case 1:
-                    std::cout << "Player " << GetName() << " send S"<< std::endl;
                     return Choice::Scissors;
                 default:
-                    std::cout << "Player " << GetName() << " send R"<< std::endl;
                     return Choice::Rock;
             }
         }
@@ -158,11 +199,18 @@ template <class T>
 class Game
 {
     public:
-        Game(const Rule<T> &rule, uint32_t rounds = -1) : _rule(rule), _rounds(rounds) {}
+        Game(const Rule<T> &rule, uint32_t rounds = -1) : _rule(rule), _rounds(rounds)
+        {
+        }
 
         void AddPlayer(Player<T> *player)
         {
             _players.insert(player);
+        }
+
+        void CleanPlayers()
+        {
+            _players.clear();
         }
 
         void Play()
@@ -185,6 +233,7 @@ class Game
                 for (auto &p : _players)
                 {
                     T c = p->GetChoice();
+                    std::cout << p->GetName() << " shows " << static_cast<int>(c) << std::endl;
                     ++choice_stats[c];
                     choice_map[c].insert(p);
                     if (p->DecideToQuit())

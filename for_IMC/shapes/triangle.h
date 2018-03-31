@@ -3,6 +3,7 @@
 
 #include "shape.h"
 #include <cmath>
+#include <cassert>
 #include <stdexcept>
 
 namespace shapes {
@@ -12,10 +13,11 @@ class Triangle : public Shape
     public:
         Triangle(double edge1, double edge2, double edge3)
         {
-            bool invalid = (edge1 > (edge2 + edge3)) ||
-                           (edge2 > (edge1 + edge3)) ||
-                           (edge3 > (edge1 + edge2));
-            if (invalid)
+            bool valid = (edge1 < (edge2 + edge3)) &&
+                         (edge2 < (edge1 + edge3)) &&
+                         (edge3 < (edge1 + edge2));
+            assert(valid);
+            if (!valid)
             {
                 throw std::invalid_argument("Invalid edges provided to construct a triangle.");
             }
