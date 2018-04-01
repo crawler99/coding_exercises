@@ -5,6 +5,7 @@
 
 namespace psr {
 
+/** This is a player who always show Scissors. */
 class ScissorsPlayer : public Player
 {
     public:

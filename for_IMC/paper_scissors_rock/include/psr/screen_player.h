@@ -7,6 +7,7 @@
 
 namespace psr {
 
+/** This is a player who inputs his/her choice from screen (standard input) */
 class ScreenPlayer : public Player
 {
     public:

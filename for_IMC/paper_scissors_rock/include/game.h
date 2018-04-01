@@ -5,10 +5,12 @@
 #include <player.h>
 #include <map>
 #include <set>
-#include <memory>
 #include <iostream>
 #include <sstream>
 
+/** This is the abstraction of a Paper-Scissors-Rock-like game.
+ *  Similar like the Player class, it depends on a particular 'choice', hence a template parameter.
+ */
 template <typename ChoiceT>
 class Game
 {
@@ -23,6 +25,7 @@ class Game
         Game& operator= (Game&&) = delete;
         ~Game() = default;
 
+        /** Add a player into game, not taking ownership of the player */
         void AddPlayer(Player<ChoiceT> *player)
         {
             _players.insert(player);
@@ -33,8 +36,12 @@ class Game
             _players.clear();
         }
 
+        /** Provides a customized way to print out the choices of all players after a round. */
         virtual void PrintPlayerChoices(const std::map<ChoiceT, std::set<Player<ChoiceT>*>> &choices) const = 0;
 
+        /** Play the game. The game structure is fixed:
+         *    collect choices -> decide if stop -> print out all choices if necessary -> make judgement -> notify each player
+         */
         void Play(const std::string &name = "")
         {
             srand(time(nullptr));

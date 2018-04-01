@@ -5,6 +5,7 @@
 
 namespace psr {
 
+/** This is a player who always show Paper. */
 class PaperPlayer : public Player
 {
     public:

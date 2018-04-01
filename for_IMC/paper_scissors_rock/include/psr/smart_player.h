@@ -9,6 +9,7 @@
 
 namespace psr {
 
+/** This is a smart player who collects historical info from the last N rounds and make choice accordingly. */
 class SmartPlayer : public Player
 {
     public:
@@ -17,6 +18,7 @@ class SmartPlayer : public Player
         {
         }
 
+        /** Observe all other players' choices in the last N rounds */
         void UpdateStrategy(Choice my_choice, Judgement judgement, std::map<Choice, uint32_t> &observation) override
         {
             if (_paper_queue.size() == _observe_window)
@@ -47,6 +49,7 @@ class SmartPlayer : public Player
             _rock_queue.push_back(rocks);
         }
 
+        /** Make smart choice based on historical data. */
         Choice GetChoice() override
         {
             uint32_t paper_num = std::accumulate(_paper_queue.begin(), _paper_queue.end(), 0);

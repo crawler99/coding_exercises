@@ -6,7 +6,7 @@
 int main()
 {
     psr::Rule rule;
-    psr::Game game(rule, 10);
+    psr::Game game(rule);
     game.AddPlayer(new psr::RandomPlayer("Random_Player_1"));
     game.AddPlayer(new psr::RandomPlayer("Random_Player_2"));
     game.AddPlayer(new psr::SmartPlayer("Smart_Player_1", 5));

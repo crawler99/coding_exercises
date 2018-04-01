@@ -7,6 +7,7 @@
 
 namespace psr {
 
+/** This is a player who makes random choice each time. */
 class RandomPlayer : public Player
 {
     public:
