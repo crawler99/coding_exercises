@@ -7,9 +7,8 @@ enum class Judgement
 };
 
 /** This is the absctraction of a game rule.
- *  For a Paper-Scissors-Rock-like game, we only need two pre-condtions to play it:
- *      1) There's a judging rule that can sperate all players exactly to two sides.
- *      2) The same judging rule can decide which side wins.
+ *  For a Paper-Scissors-Rock-like game, the only win-lose case is all players togeher
+ *  make exactly two kinds of choices, and there's a rule to judge which one wins.
  */
 template <typename ChoiceT>
 class Rule
