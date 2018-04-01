@@ -1,4 +1,4 @@
-#include "psr/game.h"
+#include <psr/game.h>
 
 namespace psr {
 

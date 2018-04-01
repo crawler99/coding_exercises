@@ -1,4 +1,4 @@
-#include "psr/rule.h"
+#include <psr/rule.h>
 
 namespace psr {
 

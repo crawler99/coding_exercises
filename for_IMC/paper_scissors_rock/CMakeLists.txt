@@ -4,7 +4,7 @@ project(paper_scissors_rock)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-file(GLOB SRCS "src/*.cc" "app/*.cc")
+file(GLOB_RECURSE SRCS "src/*.cc" "app/*.cc")
 add_executable(${PROJECT_NAME} ${SRCS})
 
 if (${BUILD_TESTS})
@@ -15,7 +15,7 @@ if (${BUILD_TESTS})
   link_directories(${GTEST_ROOT}/lib64)
   link_directories(${GMOCK_ROOT}/lib64)
 
-  file(GLOB TEST_SRCS "src/*.cc" "test/*.cc")
+  file(GLOB_RECURSE TEST_SRCS "src/*.cc" "test/*.cc")
 
   set(EXECUTABLE "runUnitTests_${PROJECT_NAME}")
 
