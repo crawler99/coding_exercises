@@ -17,6 +17,12 @@ class Game
         {
         }
 
+        Game(const Game&) = delete;
+        Game(Game&&) = delete;
+        Game& operator= (const Game&) = delete;
+        Game& operator= (Game&&) = delete;
+        ~Game() = default;
+
         void AddPlayer(Player<ChoiceT> *player)
         {
             _players.insert(player);
