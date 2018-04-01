@@ -1,8 +1,8 @@
 #ifndef _FOR_IMC_PAPER_SCISSORS_ROCK_GAME_H_
 #define _FOR_IMC_PAPER_SCISSORS_ROCK_GAME_H_
 
-#include "rule.h"
-#include "player.h"
+#include <rule.h>
+#include <player.h>
 #include <map>
 #include <set>
 #include <memory>
@@ -114,19 +114,5 @@ class Game
         const Rule<ChoiceT> &_rule;
         int32_t _rounds { -1 }; // -1 means infinite rounds
 };
-
-namespace psr {
-
-class Game : public ::Game<Choice>
-{
-    public:
-        Game(const Rule &rule, uint32_t rounds = -1) : ::Game<Choice>(rule, rounds)
-        {
-        }
-
-        void PrintPlayerChoices(const std::map<Choice, std::set<Player*>> &choices) const override;
-};
-
-}
 
 #endif

@@ -1,7 +1,7 @@
-#ifndef _FOR_IMC_PAPER_SCISSORS_ROCK_SCREEN_PLAYER_H_
-#define _FOR_IMC_PAPER_SCISSORS_ROCK_SCREEN_PLAYER_H_
+#ifndef _FOR_IMC_PAPER_SCISSORS_ROCK_PSR_SCREEN_PLAYER_H_
+#define _FOR_IMC_PAPER_SCISSORS_ROCK_PSR_SCREEN_PLAYER_H_
 
-#include "player.h"
+#include <psr/player.h>
 #include <cstdlib>
 #include <ctime>
 

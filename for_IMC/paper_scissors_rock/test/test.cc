@@ -1,10 +1,10 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "game.h"
-#include "paper_player.h"
-#include "scissors_player.h"
-#include "rock_player.h"
-#include "smart_player.h"
+#include "psr/game.h"
+#include "psr/paper_player.h"
+#include "psr/scissors_player.h"
+#include "psr/rock_player.h"
+#include "psr/smart_player.h"
 
 using namespace std;
 

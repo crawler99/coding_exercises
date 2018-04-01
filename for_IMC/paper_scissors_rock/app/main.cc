@@ -1,7 +1,7 @@
-#include "game.h"
-#include "random_player.h"
-#include "smart_player.h"
-#include "screen_player.h"
+#include "psr/game.h"
+#include "psr/random_player.h"
+#include "psr/smart_player.h"
+#include "psr/screen_player.h"
 
 int main()
 {

@@ -1,7 +1,7 @@
 #ifndef _FOR_IMC_PAPER_SCISSORS_ROCK_PLAYER_H_
 #define _FOR_IMC_PAPER_SCISSORS_ROCK_PLAYER_H_
 
-#include "rule.h"
+#include <rule.h>
 #include <map>
 #include <iostream>
 
@@ -50,11 +50,5 @@ class Player
         std::string _name;
         std::map<Judgement, uint32_t> _results;
 };
-
-namespace psr {
-
-using Player = ::Player<Choice>;
-
-}
 
 #endif

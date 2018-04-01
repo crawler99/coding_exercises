@@ -13,19 +13,4 @@ class Rule
         virtual Judgement Judge(const ChoiceT &first, const ChoiceT &second) const = 0;
 };
 
-namespace psr {
-
-enum class Choice
-{
-    Paper, Scissors, Rock
-};
-
-class Rule : public ::Rule<Choice>
-{
-    public:
-        Judgement Judge(const Choice &first, const Choice &second) const override;
-};
-
-}
-
 #endif
