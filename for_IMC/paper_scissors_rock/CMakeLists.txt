@@ -15,7 +15,7 @@ if (${BUILD_TESTS})
   link_directories(${GTEST_ROOT}/lib64)
   link_directories(${GMOCK_ROOT}/lib64)
 
-  file(GLOB TEST_SRCS "test/*.cc")
+  file(GLOB TEST_SRCS "src/*.cc" "test/*.cc")
 
   set(EXECUTABLE "runUnitTests_${PROJECT_NAME}")
 

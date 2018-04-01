@@ -27,6 +27,8 @@ class Game
             _players.clear();
         }
 
+        virtual void PrintPlayerChoices(const std::map<ChoiceT, std::set<Player<ChoiceT>*>> &choices) const = 0;
+
         void Play(const std::string &name = "")
         {
             srand(time(nullptr));
@@ -54,18 +56,20 @@ class Game
                 for (auto &p : _players)
                 {
                     ChoiceT c = p->GetChoice();
-
                     if (p->DecideToQuit())
                     {
                         stop = true;
                         break;
                     }
-
                     ++choice_stats[c];
                     choice_map[c].insert(p);
                 }
 
-                if (stop) break;
+                if (stop)
+                {
+                    break;
+                }
+                PrintPlayerChoices(choice_map);
 
                 // Make judgement
                 if (choice_map.size() == 2) // Only when there're totally two different choices that we can have winners and losers.
@@ -107,7 +111,15 @@ class Game
 
 namespace psr {
 
-using Game = ::Game<Choice>;
+class Game : public ::Game<Choice>
+{
+    public:
+        Game(const Rule &rule, uint32_t rounds = -1) : ::Game<Choice>(rule, rounds)
+        {
+        }
+
+        void PrintPlayerChoices(const std::map<Choice, std::set<Player*>> &choices) const override;
+};
 
 }
 
