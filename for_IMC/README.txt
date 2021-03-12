@@ -5,5 +5,5 @@
      - The requirement is pretty straightforward. So there are very little comments and the codes should be self-explanatory.
      - There will be no separate executable generated for 'shapes' during building. Instead, you can run 'make test' to verify all the test cases are passed.
 5. For 'paper_scissors_rock':
-     - There will be an application named 'paper_scissors_rock' generated during building. Run 'make install' to move it to 'paper_scissors_rock/bin' and run it.
+     - There will be an application named 'screen_game' generated during building. Run 'make install' to move it to 'paper_scissors_rock/bin' and run it.
      - Some necessary comments are put into the source files.
