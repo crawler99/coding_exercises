@@ -7,9 +7,3 @@
 5. For 'paper_scissors_rock':
      - There will be an application named 'paper_scissors_rock' generated during building. Run 'make install' to move it to 'paper_scissors_rock/bin' and run it.
      - Some necessary comments are put into the source files.
-6. Build steps:
-     - ./cmake_release.sh
-     - cd build/release
-     - make
-     - make test
-     - make install

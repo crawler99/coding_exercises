@@ -1,34 +1,9 @@
-cmake_minimum_required(VERSION 2.8)
+# The library codes
+add_subdirectory(src)
 
-project(paper_scissors_rock)
+# The executable codes
+add_subdirectory(apps)
 
-include_directories(${PROJECT_SOURCE_DIR}/include)
-
-file(GLOB_RECURSE SRCS "src/*.cc" "app/*.cc")
-add_executable(${PROJECT_NAME} ${SRCS})
-
-if (${BUILD_TESTS})
-  message("Building tests for " ${PROJECT_NAME} " ...")
-
-  include_directories(${GTEST_ROOT}/include)
-  include_directories(${GMOCK_ROOT}/include)
-  link_directories(${GTEST_ROOT}/lib64)
-  link_directories(${GMOCK_ROOT}/lib64)
-
-  file(GLOB_RECURSE TEST_SRCS "src/*.cc" "test/*.cc")
-
-  set(EXECUTABLE "runUnitTests_${PROJECT_NAME}")
-
-  add_executable(${EXECUTABLE} ${TEST_SRCS})
-
-  # Standard linking to gtest stuff.
-  target_link_libraries(${EXECUTABLE} gtest gtest_main)
-
-  # Extra linking for the project.
-  # target_link_libraries(${EXECUTABLE} ${PROJECT_NAME})
-
-  # Add tests
-  add_test(NAME TestPaperScissorsRock COMMAND ${EXECUTABLE})
+if (${BUILD_TESTING})
+    add_subdirectory(tests)
 endif()
-
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${PROJECT_SOURCE_DIR}/bin)
