@@ -1,0 +1,1 @@
+package_add_test(divide_integer_sequence test.cc)
