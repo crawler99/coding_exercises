@@ -8,6 +8,31 @@
 
 using namespace std;
 
+/**
+ * Problem: Find the cheapest way to divide an integer sequence to three non-adjacent sub-sequences.
+ *          For example, divide A to A[0],...A[p],....,A[q],..,A[last] where A[p] + A[q] is minimum.
+ */
+
+// Brute-force.
+int solution(vector<int> &A)
+{
+    if (A.size() < 5)
+    {
+        return 0; // cannot divide as requested.
+    }
+
+    int min_sum{INT_MAX};
+    for (size_t i = 1; i < A.size() - 3; ++i)
+    {
+        for (size_t j = A.size() - 2; j > i + 1; --j)
+        {
+            min_sum = std::min(A[i] + A[j], min_sum);
+        }
+    }
+    return min_sum;
+}
+
+// Find the smallest 3 numbers.
 int insert_sort(vector<int> &vect, vector<int> &A, int last_idx, int num_idx)
 {
     if (last_idx == -1)
@@ -40,11 +65,7 @@ int insert_sort(vector<int> &vect, vector<int> &A, int last_idx, int num_idx)
     return new_last_idx;
 }
 
-/**
- * Problem: Find the cheapest way to divide an integer sequence to three non-adjacent sub-sequences.
- *          For example, divide A to A[0],...A[p],....,A[q],..,A[last] where A[p] + A[q] is minimum.
- */
-int solution(vector<int> &A)
+int solution1(vector<int> &A)
 {
     if (A.size() < 5)
     {
