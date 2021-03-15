@@ -10,7 +10,7 @@
  *   "a" => {}
  *   "aa" =>  {0}
  *   "aba" => {1}
- *   "aaaab" => {0, 1, 2}
+ *   "aaaab" => {0, 1}
  */
 
 void ExpandAroundCenter(const std::string &s, int leftIdx, int rightIdx, std::set<int> &rstIdxes)
