@@ -106,3 +106,4 @@ endfunction()
 # Add library dirs
 add_subdirectory(for_IMC)
 add_subdirectory(for_SIG)
+add_subdirectory(for_Optiver)
