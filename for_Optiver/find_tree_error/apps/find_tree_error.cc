@@ -154,7 +154,7 @@ int main()
     }
 
     // DFS the tree from a beginning node, if a node is visited twice or
-    // if the total visited node number is less than adjMap.size(), there
+    // if the total visited node number is less than degreesMap.size(), there
     // must be cycle. Notice that in the latter case, the cycle is separated
     // from current tree which is being traversed.
     set<char> visitedSet;
