@@ -1,5 +1,3 @@
-#pragma once
-
 #include <map>
 #include <set>
 #include <list>
@@ -36,6 +34,7 @@ bool IsValidEdgeInput(const string& edge)
            (edge[1] != edge[3]);
 }
 
+// Empty return means we visited a node twice in DFS and it is not a valid tree.
 string GenSExpr(char node, const unordered_map<char, set<char>> &adjMap, set<char> &visitedSet)
 {
     if (!visitedSet.insert(node).second)
@@ -43,14 +42,13 @@ string GenSExpr(char node, const unordered_map<char, set<char>> &adjMap, set<cha
         return "";
     }
 
-    string sExpr = string("(") + node;
-
     auto it = adjMap.find(node);
     if (it == adjMap.end())  // Reaching leave node.
     {
-        return sExpr + ")";
+        return string("(") + node + ")";
     }
 
+    string sExpr;
     auto& children = it->second;
     for (auto& child : children)  // Iterate children in lexicographical order.
     {
@@ -61,7 +59,7 @@ string GenSExpr(char node, const unordered_map<char, set<char>> &adjMap, set<cha
         }
         sExpr += subSExpr;
     }
-    return sExpr + ")";
+    return string("(") + node + sExpr + ")";
 }
 
 vector<string> Tokenize(const string& text, char sep)
@@ -77,18 +75,6 @@ vector<string> Tokenize(const string& text, char sep)
     return tokens;
 }
 
-/**
- * Problem: read 1 line from stdin with format "(A,B) (A,C) (B,D) ...", each (X,Y) means Y is a child of X in a binary tree.
- *    1) If the construction of binary tree fails, print the highest-level error ("E1" -> downto -> "E5").
- *          - E1: invalid input format
- *          - E2: duplicate input
- *          - E3: a node has more than 2 children
- *          - E4: multiple roots
- *          - E5: there is cycle in the tree
- *    2) If the construction of binary tree succeeds, print the S-Expression of the whole tree. S-Expression is defined as
- *          "(nodeVal(s-Expr-of-left-child)(s-Expr-of-right-child))" where children's s-Expr are appended according to the
- *          lexical order of each child.
- */
 int main()
 {
     string line;
@@ -153,10 +139,10 @@ int main()
         }
     }
 
-    // DFS the tree from a beginning node, if a node is visited twice or
-    // if the total visited node number is less than degreesMap.size(), there
-    // must be cycle. Notice that in the latter case, the cycle is separated
-    // from current tree which is being traversed.
+    // DFS the tree from a beginning node:
+    //  - If no root is found (root == ' '), a cycle exists in current tree and the returned sExpr will be empty.
+    //  - Otherwise, if a node is visited twice from root, a cycle exists in current tree and the returned sExpr will be empty.
+    //  - Otherwise, if the total visited node number is less than degreesMap.size(), there must a cycle that is separated from current tree.
     set<char> visitedSet;
     string sExpr = GenSExpr(root, adjMap, visitedSet);
     if (!sExpr.empty() && (visitedSet.size() == degreesMap.size()))
