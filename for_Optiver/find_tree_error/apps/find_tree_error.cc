@@ -77,6 +77,18 @@ vector<string> Tokenize(const string& text, char sep)
     return tokens;
 }
 
+/**
+ * Problem: read 1 line from stdin with format "(A,B) (A,C) (B,D) ...", each (X,Y) means Y is a child of X in a binary tree.
+ *    1) If the construction of binary tree fails, print the highest-level error ("E1" -> downto -> "E5").
+ *          - E1: invalid input format
+ *          - E2: duplicate input
+ *          - E3: a node has more than 2 children
+ *          - E4: multiple roots
+ *          - E5: there is cycle in the tree
+ *    2) If the construction of binary tree succeeds, print the S-Expression of the whole tree. S-Expression is defined as
+ *          "(nodeVal(s-Expr-of-left-child)(s-Expr-of-right-child))" where children's s-Expr are appended according to the
+ *          lexical order of each child.
+ */
 int main()
 {
     string line;
