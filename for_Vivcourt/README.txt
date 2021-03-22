@@ -1,0 +1,1 @@
+- Assume the processing on OrderBook is done by single thread.

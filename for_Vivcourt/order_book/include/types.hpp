@@ -49,6 +49,36 @@ namespace vivcourt::types
             // For other template parameters, this function doesn't return, which is exactly what we want.
         }
 
+        Numeric<Signed, Size>& operator+=(Numeric<Signed, Size> &rhs)
+        {
+            decltype(Value()) sum = Value() + rhs.Value();
+            ::memcpy(_val, &sum, sizeof(sum));
+            return *this;
+        }
+
+        Numeric<Signed, Size> operator+(Numeric<Signed, Size> &another)
+        {
+            decltype(Value()) sum = Value() + another.Value();
+            Numeric<Signed, Size> rst;
+            ::memcpy(rst._val, &sum, sizeof(sum));
+            return rst;
+        }
+
+        Numeric<Signed, Size>& operator-=(Numeric<Signed, Size> &rhs)
+        {
+            decltype(Value()) residual = Value() - rhs.Value();
+            ::memcpy(_val, &residual, sizeof(residual));
+            return *this;
+        }
+
+        Numeric<Signed, Size> operator-(Numeric<Signed, Size> &another)
+        {
+            decltype(Value()) residual = Value() - another.Value();
+            Numeric<Signed, Size> rst;
+            ::memcpy(rst._val, &residual, sizeof(residual));
+            return rst;
+        }
+
     private:
         template <typename T>
         ALWAYS_INLINE typename std::enable_if<(Signed == std::is_signed<T>::value) && (Size == sizeof(T)), T>::type As() const
@@ -56,7 +86,7 @@ namespace vivcourt::types
             return *reinterpret_cast<const T*>(_val);  // No need to revert endian.
         }
 
-        char _val[Size];
+        char _val[Size]{};
     };
 
     template <uint8_t Size> using SignedNumeric = Numeric<true, Size>;

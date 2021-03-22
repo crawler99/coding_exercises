@@ -5,6 +5,7 @@
 
 TEST(OrderBook, numeric_types)
 {
+    // signed 1-byte numeric type
     int8_t i8_1 = 123;
     int8_t i8_2 = 0;
     int8_t i8_3 = -45;
@@ -14,14 +15,40 @@ TEST(OrderBook, numeric_types)
     EXPECT_EQ(si8_2->Value(), i8_2);
     auto *si8_3 = reinterpret_cast<vivcourt::types::SignedNumeric<1>*>(&i8_3);
     EXPECT_EQ(si8_3->Value(), i8_3);
+    auto si8_4 = *si8_1 + *si8_3;
+    EXPECT_EQ(si8_4.Value(), 123 - 45);
+    *si8_1 += *si8_3;
+    EXPECT_EQ(si8_1->Value(), 123 - 45);
+    auto si8_5 = *si8_1 - *si8_3;
+    EXPECT_EQ(si8_5.Value(), 123);
+    *si8_1 -= *si8_3;
+    EXPECT_EQ(si8_1->Value(), 123);
+    *si8_3 += *si8_3;
+    EXPECT_EQ(si8_3->Value(), - 45 - 45);
+    *si8_3 -= *si8_3;
+    EXPECT_EQ(si8_3->Value(), 0);
 
+    // unsigned 1-byte numeric type
     uint8_t u8_1 = 123;
     uint8_t u8_2 = 0;
     auto *su8_1 = reinterpret_cast<vivcourt::types::UnsignedNumeric<1>*>(&u8_1);
     EXPECT_EQ(su8_1->Value(), u8_1);
     auto *su8_2 = reinterpret_cast<vivcourt::types::UnsignedNumeric<1>*>(&u8_2);
     EXPECT_EQ(su8_2->Value(), u8_2);
+    auto su8_3 = *su8_1 + *su8_1;
+    EXPECT_EQ(su8_3.Value(), 123 + 123);
+    su8_3 -= *su8_1;
+    EXPECT_EQ(su8_3.Value(), 123);
+    su8_3 += *su8_1;
+    EXPECT_EQ(su8_3.Value(), 123 + 123);
+    auto su8_4 = su8_3 - *su8_1;
+    EXPECT_EQ(su8_4.Value(), 123);
+    su8_4 += su8_4;
+    EXPECT_EQ(su8_4.Value(), 123 + 123);
+    su8_4 -= su8_4;
+    EXPECT_EQ(su8_4.Value(), 0);
 
+    // signed 2-bytes numeric type
     int16_t i16_1 = 12345;
     int16_t i16_2 = 0;
     int16_t i16_3 = -23456;
@@ -32,6 +59,7 @@ TEST(OrderBook, numeric_types)
     auto *si16_3 = reinterpret_cast<vivcourt::types::SignedNumeric<2>*>(&i16_3);
     EXPECT_EQ(si16_3->Value(), i16_3);
 
+    // unsigned 2-bytes numeric type
     uint16_t u16_1 = 12345;
     uint16_t u16_2 = 0;
     auto *su16_1 = reinterpret_cast<vivcourt::types::UnsignedNumeric<2>*>(&u16_1);
@@ -39,6 +67,7 @@ TEST(OrderBook, numeric_types)
     auto *su16_2 = reinterpret_cast<vivcourt::types::UnsignedNumeric<2>*>(&u16_2);
     EXPECT_EQ(su16_2->Value(), u16_2);
 
+    // signed 4-bytes numeric type
     int32_t i32_1 = 1073741824;
     int32_t i32_2 = 0;
     int32_t i32_3 = -858993459;
@@ -49,6 +78,7 @@ TEST(OrderBook, numeric_types)
     auto *si32_3 = reinterpret_cast<vivcourt::types::SignedNumeric<4>*>(&i32_3);
     EXPECT_EQ(si32_3->Value(), i32_3);
 
+    // unsigned 4-bytes numeric type
     uint32_t u32_1 = 1073741824;
     uint32_t u32_2 = 0;
     auto *su32_1 = reinterpret_cast<vivcourt::types::UnsignedNumeric<4>*>(&u32_1);
@@ -56,6 +86,7 @@ TEST(OrderBook, numeric_types)
     auto *su32_2 = reinterpret_cast<vivcourt::types::UnsignedNumeric<4>*>(&u32_2);
     EXPECT_EQ(su32_2->Value(), u32_2);
 
+    // signed 8-bytes numeric type
     int64_t i64_1 = 4611686018427387904;
     int64_t i64_2 = 0;
     int64_t i64_3 = -2305843009213693952;
@@ -66,6 +97,7 @@ TEST(OrderBook, numeric_types)
     auto *si64_3 = reinterpret_cast<vivcourt::types::SignedNumeric<8>*>(&i64_3);
     EXPECT_EQ(si64_3->Value(), i64_3);
 
+    // unsigned 8-bytes numeric type
     uint64_t u64_1 = 4611686018427387904;
     uint64_t u64_2 = 0;
     auto *su64_1 = reinterpret_cast<vivcourt::types::UnsignedNumeric<8>*>(&u64_1);

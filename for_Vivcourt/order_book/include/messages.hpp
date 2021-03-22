@@ -9,20 +9,11 @@ namespace vivcourt::messages
 
     struct TypeTraits
     {
-        using Symbol = types::Alpha<3>;
-        static_assert(sizeof(Symbol) == 3);
-
-        using OrderId = types::UnsignedNumeric<8>;
-        static_assert(sizeof(OrderId) == 8);
-
-        using Side = types::Alpha<1>;
-        static_assert(sizeof(Side) == 1);
-
-        using OrderVolume = types::UnsignedNumeric<8>;
-        static_assert(sizeof(OrderVolume) == 8);
-
-        using OrderPrice = types::Price<4, 4>;
-        static_assert(sizeof(OrderPrice) == 4);
+        using Symbol = decltype(types::Alpha<3>().Value());
+        using OrderId = decltype(types::UnsignedNumeric<8>().Value());
+        using Side = decltype(types::Alpha<1>().Value());
+        using OrderVolume = decltype(types::UnsignedNumeric<8>().Value());
+        using OrderPrice = decltype(types::Price<4, 4>().RawValue());
     };
 
     struct Header
