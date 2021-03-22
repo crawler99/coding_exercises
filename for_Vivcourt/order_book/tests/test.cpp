@@ -15,18 +15,6 @@ TEST(OrderBook, numeric_types)
     EXPECT_EQ(si8_2->Value(), i8_2);
     auto *si8_3 = reinterpret_cast<vivcourt::types::SignedNumeric<1>*>(&i8_3);
     EXPECT_EQ(si8_3->Value(), i8_3);
-    auto si8_4 = *si8_1 + *si8_3;
-    EXPECT_EQ(si8_4.Value(), 123 - 45);
-    *si8_1 += *si8_3;
-    EXPECT_EQ(si8_1->Value(), 123 - 45);
-    auto si8_5 = *si8_1 - *si8_3;
-    EXPECT_EQ(si8_5.Value(), 123);
-    *si8_1 -= *si8_3;
-    EXPECT_EQ(si8_1->Value(), 123);
-    *si8_3 += *si8_3;
-    EXPECT_EQ(si8_3->Value(), - 45 - 45);
-    *si8_3 -= *si8_3;
-    EXPECT_EQ(si8_3->Value(), 0);
 
     // unsigned 1-byte numeric type
     uint8_t u8_1 = 123;
@@ -35,18 +23,6 @@ TEST(OrderBook, numeric_types)
     EXPECT_EQ(su8_1->Value(), u8_1);
     auto *su8_2 = reinterpret_cast<vivcourt::types::UnsignedNumeric<1>*>(&u8_2);
     EXPECT_EQ(su8_2->Value(), u8_2);
-    auto su8_3 = *su8_1 + *su8_1;
-    EXPECT_EQ(su8_3.Value(), 123 + 123);
-    su8_3 -= *su8_1;
-    EXPECT_EQ(su8_3.Value(), 123);
-    su8_3 += *su8_1;
-    EXPECT_EQ(su8_3.Value(), 123 + 123);
-    auto su8_4 = su8_3 - *su8_1;
-    EXPECT_EQ(su8_4.Value(), 123);
-    su8_4 += su8_4;
-    EXPECT_EQ(su8_4.Value(), 123 + 123);
-    su8_4 -= su8_4;
-    EXPECT_EQ(su8_4.Value(), 0);
 
     // signed 2-bytes numeric type
     int16_t i16_1 = 12345;
