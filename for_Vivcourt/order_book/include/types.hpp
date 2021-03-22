@@ -8,8 +8,6 @@
 
 namespace vivcourt::types
 {
-#pragma pack(push, 1)
-
     template <bool Signed, uint8_t Size>
     class Numeric
     {
@@ -48,6 +46,7 @@ namespace vivcourt::types
             {
                 return As<uint64_t>();
             }
+            // For other template parameters, this function doesn't return, which is exactly what we want.
         }
 
     private:
@@ -96,8 +95,6 @@ namespace vivcourt::types
     private:
         char _val[Size];
     };
-
-#pragma pack(pop)
 }
 
 #endif // _VIVCOURT_TYPES_H_
