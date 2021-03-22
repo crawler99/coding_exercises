@@ -52,7 +52,7 @@ namespace vivcourt::types
 
     private:
         template <typename T>
-        typename std::enable_if<(Signed == std::is_signed<T>::value) && (Size == sizeof(T)), T>::type As() const
+        ALWAYS_INLINE typename std::enable_if<(Signed == std::is_signed<T>::value) && (Size == sizeof(T)), T>::type As() const
         {
             return *reinterpret_cast<const T*>(_val);  // No need to revert endian.
         }
