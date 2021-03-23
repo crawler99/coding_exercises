@@ -1,4 +1,4 @@
-add_executable(order_book order_book.cpp)
+add_executable(order_book order_book_app.cpp)
 
 target_link_libraries(order_book PRIVATE decoder)
 

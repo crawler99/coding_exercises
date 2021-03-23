@@ -3,8 +3,9 @@
 
 #include "common.hpp"
 #include <cstdint>
+#include <cmath>
 #include <type_traits>
-#include <string_view>
+#include <string>
 
 namespace vivcourt::types
 {
@@ -85,11 +86,11 @@ namespace vivcourt::types
     class Alpha
     {
     public:
-        ALWAYS_INLINE std::string_view Value() const
+        ALWAYS_INLINE std::string Value() const
         {
             uint16_t i = Size;
             while ((--i >= 0) && (_val[i] == PadChar)) {}
-            return std::string_view(_val, i + 1);
+            return std::string(_val, i + 1);
         }
 
     private:

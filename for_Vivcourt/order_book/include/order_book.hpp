@@ -1,23 +1,16 @@
 #ifndef _VIVCOURT_ORDER_BOOK_H_
 #define _VIVCOURT_ORDER_BOOK_H_
 
-#include "messages.hpp"
+#include "common.hpp"
+#include "types.hpp"
 #include <map>
+#include <cassert>
 #include <unordered_map>
+#include <vector>
 #include <optional>
 
 namespace vivcourt
 {
-    struct OrderBookTraits
-    {
-        using TriggerUpdateKey = decltype(messages::Sequence().Value());
-        using Symbol = decltype(messages::Symbol().Value());
-        using OrderId = decltype(messages::OrderId().Value());
-        using Side = decltype(messages::Side().Value());
-        using OrderVolume = decltype(messages::OrderVolume().Value());
-        using OrderPrice = decltype(messages::OrderPrice().RawValue());
-    };
-
     template <typename Traits>
     class PriceLevel
     {
@@ -166,70 +159,87 @@ namespace vivcourt
     class OrderBook
     {
     public:
-        template <SideEnum S>
-        ALWAYS_INLINE auto AddOrder(typename Traits::OrderId order_id, typename Traits::OrderPrice order_price, typename Traits::OrderVolume order_volume)
+        ALWAYS_INLINE auto AddOrder(SideEnum side, typename Traits::OrderId order_id, typename Traits::OrderPrice order_price, typename Traits::OrderVolume order_volume)
         {
-            if constexpr (S == SideEnum::Bid)
+            if (side == SideEnum::Bid)
             {
-                return _bid_side.AddOrder(order_id, order_price, order_volume);
+                bool succ = _bid_side.AddOrder(order_id, order_price, order_volume);
+                _bid_side.ExtractDepth(_report_depth, _bid_depth);
+                return succ;
             }
             else
             {
-                return _ask_side.AddOrder(order_id, order_price, order_volume);
+                bool succ = _ask_side.AddOrder(order_id, order_price, order_volume);
+                _ask_side.ExtractDepth(_report_depth, _ask_depth);
+                return succ;
             }
         }
 
-        template <SideEnum S>
-        ALWAYS_INLINE auto UpdateOrder(typename Traits::OrderId order_id, typename Traits::OrderPrice order_price, typename Traits::OrderVolume order_volume)
+        ALWAYS_INLINE auto UpdateOrder(SideEnum side, typename Traits::OrderId order_id, typename Traits::OrderPrice order_price, typename Traits::OrderVolume order_volume)
         {
-            if constexpr (S == SideEnum::Bid)
+            if (side == SideEnum::Bid)
             {
-                return _bid_side.UpdateOrder(order_id, order_price, order_volume);
+                bool succ = _bid_side.UpdateOrder(order_id, order_price, order_volume);
+                _bid_side.ExtractDepth(_report_depth, _bid_depth);
+                return succ;
             }
             else
             {
-                return _ask_side.UpdateOrder(order_id, order_price, order_volume);
+                bool succ = _ask_side.UpdateOrder(order_id, order_price, order_volume);
+                _ask_side.ExtractDepth(_report_depth, _ask_depth);
+                return succ;
             }
         }
 
-        template <SideEnum S>
-        ALWAYS_INLINE auto DeleteOrder(typename Traits::OrderId order_id)
+        ALWAYS_INLINE auto DeleteOrder(SideEnum side, typename Traits::OrderId order_id)
         {
-            if constexpr (S == SideEnum::Bid)
+            if (side == SideEnum::Bid)
             {
-                return _bid_side.DeleteOrder(order_id);
+                bool succ = _bid_side.DeleteOrder(order_id);
+                _bid_side.ExtractDepth(_report_depth, _bid_depth);
+                return succ;
             }
             else
             {
-                return _ask_side.DeleteOrder(order_id);
+                bool succ = _ask_side.DeleteOrder(order_id);
+                _ask_side.ExtractDepth(_report_depth, _ask_depth);
+                return succ;
             }
         }
 
-        template <SideEnum S>
-        ALWAYS_INLINE auto ExecuteOrder(typename Traits::OrderId order_id, typename Traits::OrderVolume traded_volume)
+        ALWAYS_INLINE auto ExecuteOrder(SideEnum side, typename Traits::OrderId order_id, typename Traits::OrderVolume traded_volume)
         {
-            if constexpr (S == SideEnum::Bid)
+            if (side == SideEnum::Bid)
             {
-                return _bid_side.ExecuteOrder(order_id, traded_volume);
+                bool succ = _bid_side.ExecuteOrder(order_id, traded_volume);
+                _bid_side.ExtractDepth(_report_depth, _bid_depth);
+                return succ;
             }
             else
             {
-                return _ask_side.ExecuteOrder(order_id, traded_volume);
+                bool succ = _ask_side.ExecuteOrder(order_id, traded_volume);
+                _ask_side.ExtractDepth(_report_depth, _ask_depth);
+                return succ;
             }
         }
 
-        ALWAYS_INLINE void ExtractDepth(
-            std::optional<uint8_t> max_level,
-            std::vector<std::pair<typename Traits::OrderPrice, typename Traits::OrderVolume>> &bid_depth,
-            std::vector<std::pair<typename Traits::OrderPrice, typename Traits::OrderVolume>> &ask_depth)
+        ALWAYS_INLINE OrderBook<Traits>& SetReportDepth(std::optional<uint8_t> report_depth)
         {
-            _bid_side.ExtractDepth(max_level, bid_depth);
-            _ask_side.ExtractDepth(max_level, ask_depth);
+            _report_depth = report_depth;
+            return *this;
+        }
+
+        ALWAYS_INLINE auto GetDepth(SideEnum side)
+        {
+            return side == SideEnum::Bid ? _bid_depth : _ask_depth;
         }
 
     private:
+        std::optional<uint8_t> _report_depth;
         Side<Traits, std::greater<typename Traits::OrderPrice>> _bid_side;
         Side<Traits, std::less<typename Traits::OrderPrice>> _ask_side;
+        std::vector<std::pair<typename Traits::OrderPrice, typename Traits::OrderVolume>> _bid_depth;
+        std::vector<std::pair<typename Traits::OrderPrice, typename Traits::OrderVolume>> _ask_depth;
     };
 
 }

@@ -1,2 +1,3 @@
 - Assume the processing on OrderBook is done by single thread.
 - Assume the order volume in "Order Added" or "Order Updated" message is non-zero.
+- For simplicity, always read the entire input from a disk file.

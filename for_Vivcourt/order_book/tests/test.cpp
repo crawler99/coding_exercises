@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-
-#include "order_book.hpp"
+#include "order_book_manager.hpp"
 
 namespace vivcourt::test
 {
@@ -129,68 +128,84 @@ TEST(Types, alpha_type)
     EXPECT_EQ(alpha2->Value().compare("hello,"), 0);
 }
 
-TEST(OrderBook, build_full_depth)
+TEST(OrderBook, build_book_and_report_top_5_levels)
+{
+    OrderBook<OrderBookTraits> book;
+    book.SetReportDepth(5);
+
+    // Add orders
+    book.AddOrder(SideEnum::Bid, 1, 50, 1);
+    book.AddOrder(SideEnum::Bid, 2, 60, 2);
+    book.AddOrder(SideEnum::Bid, 3, 70, 3);
+    book.AddOrder(SideEnum::Bid, 4, 80, 4);
+    book.AddOrder(SideEnum::Bid, 5, 80, 5);
+    book.AddOrder(SideEnum::Bid, 6, 90, 6);
+    book.AddOrder(SideEnum::Bid, 7, 100, 7);
+
+    book.AddOrder(SideEnum::Ask, 8, 110, 11);
+    book.AddOrder(SideEnum::Ask, 9, 120, 12);
+    book.AddOrder(SideEnum::Ask, 10, 130, 13);
+    book.AddOrder(SideEnum::Ask, 11, 140, 14);
+    book.AddOrder(SideEnum::Ask, 12, 150, 15);
+    book.AddOrder(SideEnum::Ask, 13, 150, 16);
+    book.AddOrder(SideEnum::Ask, 14, 160, 17);
+
+    using SideDepth = std::vector<std::pair<typename OrderBookTraits::OrderPrice, typename OrderBookTraits::OrderVolume>>;
+    SideDepth expected_bid_depth{{100, 7}, {90, 6}, {80, 9}, {70, 3}, {60, 2}};
+    SideDepth expected_ask_depth{{110, 11}, {120, 12}, {130, 13}, {140, 14}, {150, 31}};
+    EXPECT_EQ(book.GetDepth(SideEnum::Bid), expected_bid_depth);
+    EXPECT_EQ(book.GetDepth(SideEnum::Ask), expected_ask_depth);
+
+    // Update orders
+    book.UpdateOrder(SideEnum::Bid, 7, 85, 2);
+    book.UpdateOrder(SideEnum::Ask, 12, 105, 10);
+    expected_bid_depth = {{90, 6}, {85, 2}, {80, 9}, {70, 3}, {60, 2}};
+    expected_ask_depth = {{105, 10}, {110, 11}, {120, 12}, {130, 13}, {140, 14}};
+    EXPECT_EQ(book.GetDepth(SideEnum::Bid), expected_bid_depth);
+    EXPECT_EQ(book.GetDepth(SideEnum::Ask), expected_ask_depth);
+
+    // Delete orders
+    book.DeleteOrder(SideEnum::Bid, 3);
+    book.DeleteOrder(SideEnum::Ask, 12);
+    expected_bid_depth = {{90, 6}, {85, 2}, {80, 9}, {60, 2}, {50, 1}};
+    expected_ask_depth = {{110, 11}, {120, 12}, {130, 13}, {140, 14}, {150, 16}};
+    EXPECT_EQ(book.GetDepth(SideEnum::Bid), expected_bid_depth);
+    EXPECT_EQ(book.GetDepth(SideEnum::Ask), expected_ask_depth);
+
+    // Execute orders
+    book.ExecuteOrder(SideEnum::Bid, 4, 1);
+    book.ExecuteOrder(SideEnum::Ask, 10, 13);
+    expected_bid_depth = {{90, 6}, {85, 2}, {80, 8}, {60, 2}, {50, 1}};
+    expected_ask_depth = {{110, 11}, {120, 12}, {140, 14}, {150, 16}, {160, 17}};
+    EXPECT_EQ(book.GetDepth(SideEnum::Bid), expected_bid_depth);
+    EXPECT_EQ(book.GetDepth(SideEnum::Ask), expected_ask_depth);
+}
+
+TEST(OrderBook, build_book_and_report_full_levels)
 {
     OrderBook<OrderBookTraits> book;
 
-    // Add orders
-    book.AddOrder<SideEnum::Bid>(1, 50, 1);
-    book.AddOrder<SideEnum::Bid>(2, 60, 2);
-    book.AddOrder<SideEnum::Bid>(3, 70, 3);
-    book.AddOrder<SideEnum::Bid>(4, 80, 4);
-    book.AddOrder<SideEnum::Bid>(5, 80, 5);
-    book.AddOrder<SideEnum::Bid>(6, 90, 6);
-    book.AddOrder<SideEnum::Bid>(7, 100, 7);
+    book.AddOrder(SideEnum::Bid, 1, 50, 1);
+    book.AddOrder(SideEnum::Bid, 2, 60, 2);
+    book.AddOrder(SideEnum::Bid, 3, 70, 3);
+    book.AddOrder(SideEnum::Bid, 4, 80, 4);
+    book.AddOrder(SideEnum::Bid, 5, 80, 5);
+    book.AddOrder(SideEnum::Bid, 6, 90, 6);
+    book.AddOrder(SideEnum::Bid, 7, 100, 7);
 
-    book.AddOrder<SideEnum::Ask>(8, 110, 11);
-    book.AddOrder<SideEnum::Ask>(9, 120, 12);
-    book.AddOrder<SideEnum::Ask>(10, 130, 13);
-    book.AddOrder<SideEnum::Ask>(11, 140, 14);
-    book.AddOrder<SideEnum::Ask>(12, 150, 15);
-    book.AddOrder<SideEnum::Ask>(13, 150, 16);
-    book.AddOrder<SideEnum::Ask>(14, 160, 17);
+    book.AddOrder(SideEnum::Ask, 8, 110, 11);
+    book.AddOrder(SideEnum::Ask, 9, 120, 12);
+    book.AddOrder(SideEnum::Ask, 10, 130, 13);
+    book.AddOrder(SideEnum::Ask, 11, 140, 14);
+    book.AddOrder(SideEnum::Ask, 12, 150, 15);
+    book.AddOrder(SideEnum::Ask, 13, 150, 16);
+    book.AddOrder(SideEnum::Ask, 14, 160, 17);
 
     using SideDepth = std::vector<std::pair<typename OrderBookTraits::OrderPrice, typename OrderBookTraits::OrderVolume>>;
-    SideDepth bid_depth;
-    SideDepth ask_depth;
-    book.ExtractDepth(5, bid_depth, ask_depth);
-    SideDepth expected_bid_depth{{100, 7}, {90, 6}, {80, 9}, {70, 3}, {60, 2}};
-    SideDepth expected_ask_depth{{110, 11}, {120, 12}, {130, 13}, {140, 14}, {150, 31}};
-    EXPECT_EQ(bid_depth, expected_bid_depth);
-    EXPECT_EQ(ask_depth, expected_ask_depth);
-
-    book.ExtractDepth(std::nullopt, bid_depth, ask_depth);
-    expected_bid_depth.emplace_back(50, 1);
-    expected_ask_depth.emplace_back(160, 17);
-    EXPECT_EQ(bid_depth, expected_bid_depth);
-    EXPECT_EQ(ask_depth, expected_ask_depth);
-
-    // Update orders
-    book.UpdateOrder<SideEnum::Bid>(7, 85, 2);
-    book.UpdateOrder<SideEnum::Ask>(12, 105, 10);
-    expected_bid_depth = {{90, 6}, {85, 2}, {80, 9}, {70, 3}, {60, 2}};
-    expected_ask_depth = {{105, 10}, {110, 11}, {120, 12}, {130, 13}, {140, 14}};
-    book.ExtractDepth(5, bid_depth, ask_depth);
-    EXPECT_EQ(bid_depth, expected_bid_depth);
-    EXPECT_EQ(ask_depth, expected_ask_depth);
-
-    // Delete orders
-    book.DeleteOrder<SideEnum::Bid>(3);
-    book.DeleteOrder<SideEnum::Ask>(12);
-    expected_bid_depth = {{90, 6}, {85, 2}, {80, 9}, {60, 2}, {50, 1}};
-    expected_ask_depth = {{110, 11}, {120, 12}, {130, 13}, {140, 14}, {150, 16}};
-    book.ExtractDepth(5, bid_depth, ask_depth);
-    EXPECT_EQ(bid_depth, expected_bid_depth);
-    EXPECT_EQ(ask_depth, expected_ask_depth);
-
-    // Execute orders
-    book.ExecuteOrder<SideEnum::Bid>(4, 1);
-    book.ExecuteOrder<SideEnum::Ask>(10, 13);
-    expected_bid_depth = {{90, 6}, {85, 2}, {80, 8}, {60, 2}, {50, 1}};
-    expected_ask_depth = {{110, 11}, {120, 12}, {140, 14}, {150, 16}, {160, 17}};
-    book.ExtractDepth(5, bid_depth, ask_depth);
-    EXPECT_EQ(bid_depth, expected_bid_depth);
-    EXPECT_EQ(ask_depth, expected_ask_depth);
+    SideDepth expected_bid_depth{{100, 7}, {90, 6}, {80, 9}, {70, 3}, {60, 2}, {50, 1}};
+    SideDepth expected_ask_depth{{110, 11}, {120, 12}, {130, 13}, {140, 14}, {150, 31}, {160, 17}};
+    EXPECT_EQ(book.GetDepth(SideEnum::Bid), expected_bid_depth);
+    EXPECT_EQ(book.GetDepth(SideEnum::Ask), expected_ask_depth);
 }
 
 }
