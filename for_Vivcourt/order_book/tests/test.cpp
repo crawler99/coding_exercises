@@ -3,9 +3,8 @@
 
 #include "order_book.hpp"
 
-namespace vivcourt
+namespace vivcourt::test
 {
-
 TEST(Types, numeric_types)
 {
     // signed 1-byte numeric type

@@ -22,17 +22,17 @@ namespace vivcourt
     class PriceLevel
     {
     public:
-        void AddVolume(typename Traits::OrderVolume volume)
+        ALWAYS_INLINE void AddVolume(typename Traits::OrderVolume volume)
         {
             _total_volume += volume;
         }
 
-        void ReduceVolume(typename Traits::OrderVolume volume)
+        ALWAYS_INLINE void ReduceVolume(typename Traits::OrderVolume volume)
         {
             _total_volume -= volume;
         }
 
-        typename Traits::OrderVolume GetVolume()
+        ALWAYS_INLINE typename Traits::OrderVolume GetVolume()
         {
             return _total_volume;
         }
@@ -167,7 +167,7 @@ namespace vivcourt
     {
     public:
         template <SideEnum S>
-        auto AddOrder(typename Traits::OrderId order_id, typename Traits::OrderPrice order_price, typename Traits::OrderVolume order_volume)
+        ALWAYS_INLINE auto AddOrder(typename Traits::OrderId order_id, typename Traits::OrderPrice order_price, typename Traits::OrderVolume order_volume)
         {
             if constexpr (S == SideEnum::Bid)
             {
@@ -180,7 +180,7 @@ namespace vivcourt
         }
 
         template <SideEnum S>
-        auto UpdateOrder(typename Traits::OrderId order_id, typename Traits::OrderPrice order_price, typename Traits::OrderVolume order_volume)
+        ALWAYS_INLINE auto UpdateOrder(typename Traits::OrderId order_id, typename Traits::OrderPrice order_price, typename Traits::OrderVolume order_volume)
         {
             if constexpr (S == SideEnum::Bid)
             {
@@ -193,7 +193,7 @@ namespace vivcourt
         }
 
         template <SideEnum S>
-        auto DeleteOrder(typename Traits::OrderId order_id)
+        ALWAYS_INLINE auto DeleteOrder(typename Traits::OrderId order_id)
         {
             if constexpr (S == SideEnum::Bid)
             {
@@ -206,7 +206,7 @@ namespace vivcourt
         }
 
         template <SideEnum S>
-        auto ExecuteOrder(typename Traits::OrderId order_id, typename Traits::OrderVolume traded_volume)
+        ALWAYS_INLINE auto ExecuteOrder(typename Traits::OrderId order_id, typename Traits::OrderVolume traded_volume)
         {
             if constexpr (S == SideEnum::Bid)
             {
@@ -218,9 +218,10 @@ namespace vivcourt
             }
         }
 
-        void ExtractDepth(std::optional<uint8_t> max_level,
-                          std::vector<std::pair<typename Traits::OrderPrice, typename Traits::OrderVolume>> &bid_depth,
-                          std::vector<std::pair<typename Traits::OrderPrice, typename Traits::OrderVolume>> &ask_depth)
+        ALWAYS_INLINE void ExtractDepth(
+            std::optional<uint8_t> max_level,
+            std::vector<std::pair<typename Traits::OrderPrice, typename Traits::OrderVolume>> &bid_depth,
+            std::vector<std::pair<typename Traits::OrderPrice, typename Traits::OrderVolume>> &ask_depth)
         {
             _bid_side.ExtractDepth(max_level, bid_depth);
             _ask_side.ExtractDepth(max_level, ask_depth);
