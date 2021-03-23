@@ -7,14 +7,30 @@ int main (int argc, char *argv[])
 {
     if (argc != 3)
     {
-        std::cout << "Usage: " << argv[0] << " depth binary_marketdata_file" << std::endl;
+        std::cout << "Usage: " << argv[0] << " full|<depth> binary_marketdata_file" << std::endl;
         return EXIT_FAILURE;
     }
 
     vivcourt::OrderBookManager ob_manager;
     if (::strcmp(argv[1], "full") != 0)
     {
-        ob_manager.SetReportDepth(std::stoi(argv[1]));
+        int report_depth{0};
+        try
+        {
+            report_depth = std::stoi(argv[1]);
+            if (report_depth < 0 || report_depth > std::numeric_limits<uint8_t>::max())
+            {
+                std::cerr << "Invalid program argument: depth=" << report_depth << ", where the desired range is full or [0, "
+                          << static_cast<int>(std::numeric_limits<uint8_t>::max()) << "]" << std::endl;
+                return EXIT_FAILURE;
+            }
+        }
+        catch (...)
+        {
+            std::cerr << "Non-integer program argument 'depth'" << std::endl;
+            return EXIT_FAILURE;
+        }
+        ob_manager.SetReportDepth(report_depth);
     }
 
     std::ifstream md_file(argv[2], std::ios::binary);
