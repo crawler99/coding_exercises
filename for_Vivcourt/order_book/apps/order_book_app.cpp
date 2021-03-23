@@ -24,6 +24,11 @@ int main (int argc, char *argv[])
     {
         auto *header = reinterpret_cast<vivcourt::messages::Header*>(&buffer[idx]);
         idx += sizeof(vivcourt::messages::Header);
+        if (idx + header->_msg_size.Value() >= buffer.size())
+        {
+            break; // Imcomplete message.
+        }
+
         std::optional<vivcourt::DepthUpdate> depth_update;
         switch (buffer[idx])
         {
