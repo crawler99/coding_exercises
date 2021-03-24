@@ -4,8 +4,9 @@
 #include "common.hpp"
 #include <cstdint>
 #include <cmath>
+#include <cstring>
 #include <type_traits>
-#include <string>
+#include <string_view>
 
 namespace vivcourt::messages::types
 {
@@ -82,16 +83,32 @@ namespace vivcourt::messages::types
         static constexpr double _multiplier {1.0 / std::pow(10, NumOfDecimals) };  // Multiplication is much faster than division for floating-point numbers.
     };
 
+    // For Alpha type, we don't want to involve the cost of string construction when getting its
+    // value and using it as the key to look up maps. So I use string_view to accelerate and
+    // the result shows a ~ 30% latency reduction when processing the whole input2.stream.
     template <uint16_t Size, char PadChar = ' '>
     class Alpha
     {
     public:
-        ALWAYS_INLINE std::string Value() const
+        ALWAYS_INLINE std::string_view Value() const
         {
             uint16_t i = Size;
             while ((--i >= 0) && (_val[i] == PadChar)) {}
-            return std::string(_val, i + 1);
+            return std::string_view(_val, i + 1);
         }
+
+        bool operator==(const Alpha<Size, PadChar> &rhs) const
+        {
+            return ::memcmp(_val, rhs._val, Size) == 0;
+        }
+
+        struct Hasher
+        {
+            std::size_t operator()(const Alpha<Size, PadChar> &alpha) const
+            {
+                return std::hash<std::string_view>()(alpha.Value());
+            }
+        };
 
     private:
         char _val[Size];

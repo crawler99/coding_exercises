@@ -9,7 +9,7 @@ namespace vivcourt
 {
     struct OrderBookTraits
     {
-        using Symbol = decltype(messages::Symbol().Value());
+        using Symbol = messages::Symbol;
         using OrderId = decltype(messages::OrderId().Value());
         using Side = decltype(messages::Side().Value());
         using OrderVolume = decltype(messages::OrderVolume().Value());
@@ -26,7 +26,7 @@ namespace vivcourt
 
     std::ostream& operator<<(std::ostream &os, const DepthUpdate &depth_update)
     {
-        os << depth_update._update_seq << ", " << depth_update._symbol << ", [";
+        os << depth_update._update_seq << ", " << depth_update._symbol.Value() << ", [";
         for (std::size_t i = 0; i < depth_update._bid_depth.size(); ++i)
         {
             auto &level = depth_update._bid_depth[i];
@@ -47,7 +47,7 @@ namespace vivcourt
     public:
         std::optional<DepthUpdate> ProcessOrderAdded(const messages::Header &header, messages::OrderAdded &msg)
         {
-            auto &book = _books[msg._symbol.Value()];
+            auto &book = _books[msg._symbol];
             book.SetReportDepth(_report_depth);
             auto side_enum = GetSide(msg._side);
             auto old_depth = book.GetDepth(side_enum);
@@ -59,15 +59,15 @@ namespace vivcourt
             auto &new_depth = book.GetDepth(side_enum);
             if (old_depth != new_depth)
             {
-                return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol.Value(), new_depth, book.GetDepth(SideEnum::Ask)}
-                                                    : DepthUpdate{header._sequence.Value(), msg._symbol.Value(), book.GetDepth(SideEnum::Bid), new_depth};
+                return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol, new_depth, book.GetDepth(SideEnum::Ask)}
+                                                    : DepthUpdate{header._sequence.Value(), msg._symbol, book.GetDepth(SideEnum::Bid), new_depth};
             }
             return std::nullopt;
         }
 
         std::optional<DepthUpdate> ProcessOrderUpdated(const messages::Header &header, const messages::OrderUpdated &msg)
         {
-            auto it = _books.find(msg._symbol.Value());
+            auto it = _books.find(msg._symbol);
             if (it == _books.end())
             {
                 return std::nullopt;
@@ -84,15 +84,15 @@ namespace vivcourt
             auto &new_depth = book.GetDepth(side_enum);
             if (old_depth != new_depth)
             {
-                return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol.Value(), new_depth, book.GetDepth(SideEnum::Ask)}
-                                                    : DepthUpdate{header._sequence.Value(), msg._symbol.Value(), book.GetDepth(SideEnum::Bid), new_depth};
+                return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol, new_depth, book.GetDepth(SideEnum::Ask)}
+                                                    : DepthUpdate{header._sequence.Value(), msg._symbol, book.GetDepth(SideEnum::Bid), new_depth};
             }
             return std::nullopt;
         }
 
         std::optional<DepthUpdate> ProcessOrderDeleted(const messages::Header &header, const messages::OrderDeleted &msg)
         {
-            auto it = _books.find(msg._symbol.Value());
+            auto it = _books.find(msg._symbol);
             if (it == _books.end())
             {
                 return std::nullopt;
@@ -109,15 +109,15 @@ namespace vivcourt
             auto &new_depth = book.GetDepth(side_enum);
             if (old_depth != new_depth)
             {
-                return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol.Value(), new_depth, book.GetDepth(SideEnum::Ask)}
-                                                    : DepthUpdate{header._sequence.Value(), msg._symbol.Value(), book.GetDepth(SideEnum::Bid), new_depth};
+                return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol, new_depth, book.GetDepth(SideEnum::Ask)}
+                                                    : DepthUpdate{header._sequence.Value(), msg._symbol, book.GetDepth(SideEnum::Bid), new_depth};
             }
             return std::nullopt;
         }
 
         std::optional<DepthUpdate> ProcessOrderExecuted(const messages::Header &header, const messages::OrderExecuted &msg)
         {
-            auto it = _books.find(msg._symbol.Value());
+            auto it = _books.find(msg._symbol);
             if (it == _books.end())
             {
                 return std::nullopt;
@@ -134,8 +134,8 @@ namespace vivcourt
             auto &new_depth = book.GetDepth(side_enum);
             if (old_depth != new_depth)
             {
-                return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol.Value(), new_depth, book.GetDepth(SideEnum::Ask)}
-                                                    : DepthUpdate{header._sequence.Value(), msg._symbol.Value(), book.GetDepth(SideEnum::Bid), new_depth};
+                return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol, new_depth, book.GetDepth(SideEnum::Ask)}
+                                                    : DepthUpdate{header._sequence.Value(), msg._symbol, book.GetDepth(SideEnum::Bid), new_depth};
             }
             return std::nullopt;
         }
@@ -153,7 +153,7 @@ namespace vivcourt
         }
 
         std::optional<uint8_t> _report_depth;
-        std::unordered_map<std::string, OrderBook<OrderBookTraits>> _books;
+        std::unordered_map<typename OrderBookTraits::Symbol, OrderBook<OrderBookTraits>, typename OrderBookTraits::Symbol::Hasher> _books;
     };
 
 }
