@@ -56,7 +56,7 @@ namespace vivcourt
                 return std::nullopt;
             }
 
-            auto new_depth = book.GetDepth(side_enum);
+            auto &new_depth = book.GetDepth(side_enum);
             if (old_depth != new_depth)
             {
                 return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol.Value(), new_depth, book.GetDepth(SideEnum::Ask)}
@@ -81,7 +81,7 @@ namespace vivcourt
                 return std::nullopt;
             }
 
-            auto new_depth = book.GetDepth(side_enum);
+            auto &new_depth = book.GetDepth(side_enum);
             if (old_depth != new_depth)
             {
                 return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol.Value(), new_depth, book.GetDepth(SideEnum::Ask)}
@@ -106,7 +106,7 @@ namespace vivcourt
                 return std::nullopt;
             }
 
-            auto new_depth = book.GetDepth(side_enum);
+            auto &new_depth = book.GetDepth(side_enum);
             if (old_depth != new_depth)
             {
                 return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol.Value(), new_depth, book.GetDepth(SideEnum::Ask)}
@@ -131,7 +131,7 @@ namespace vivcourt
                 return std::nullopt;
             }
 
-            auto new_depth = book.GetDepth(side_enum);
+            auto &new_depth = book.GetDepth(side_enum);
             if (old_depth != new_depth)
             {
                 return (side_enum == SideEnum::Bid) ? DepthUpdate{header._sequence.Value(), msg._symbol.Value(), new_depth, book.GetDepth(SideEnum::Ask)}

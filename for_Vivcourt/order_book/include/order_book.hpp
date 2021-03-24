@@ -2,7 +2,7 @@
 #define _VIVCOURT_ORDER_BOOK_H_
 
 #include "common.hpp"
-#include "types.hpp"
+#include "message_types.hpp"
 #include <map>
 #include <cassert>
 #include <unordered_map>
@@ -229,7 +229,7 @@ namespace vivcourt
             return *this;
         }
 
-        ALWAYS_INLINE auto GetDepth(SideEnum side)
+        ALWAYS_INLINE const auto& GetDepth(SideEnum side)
         {
             return side == SideEnum::Bid ? _bid_depth : _ask_depth;
         }

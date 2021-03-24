@@ -1,7 +1,7 @@
 #ifndef _VIVCOURT_MESSAGES_H_
 #define _VIVCOURT_MESSAGES_H_
 
-#include "types.hpp"
+#include "message_types.hpp"
 
 namespace vivcourt::messages
 {

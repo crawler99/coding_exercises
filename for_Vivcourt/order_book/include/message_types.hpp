@@ -7,7 +7,7 @@
 #include <type_traits>
 #include <string>
 
-namespace vivcourt::types
+namespace vivcourt::messages::types
 {
     template <bool Signed, uint8_t Size>
     class Numeric
