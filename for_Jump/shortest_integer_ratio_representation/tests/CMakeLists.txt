@@ -1,0 +1,1 @@
+package_add_test(shortest_integer_ratio_representation test.cc)
