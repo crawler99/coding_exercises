@@ -92,7 +92,7 @@ namespace vivcourt::messages::types
     public:
         ALWAYS_INLINE std::string_view Value() const
         {
-            uint16_t i = Size;
+            int32_t i = Size;
             while ((--i >= 0) && (_val[i] == PadChar)) {}
             return std::string_view(_val, i + 1);
         }

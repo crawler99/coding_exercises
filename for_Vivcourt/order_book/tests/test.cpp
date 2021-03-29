@@ -126,6 +126,8 @@ TEST(Types, alpha_type)
     EXPECT_EQ(alpha1->Value().compare(str1), 0);
     auto *alpha2 = reinterpret_cast<messages::types::Alpha<11>*>(str2);
     EXPECT_EQ(alpha2->Value().compare("hello,"), 0);
+    auto *alpha3 = reinterpret_cast<messages::types::Alpha<11>*>(str3);
+    EXPECT_EQ(alpha3->Value().compare(""), 0);
 }
 
 TEST(OrderBook, build_book_and_report_top_5_levels)
